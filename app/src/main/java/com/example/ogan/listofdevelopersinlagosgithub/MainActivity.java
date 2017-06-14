@@ -3,6 +3,7 @@ package com.example.ogan.listofdevelopersinlagosgithub;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             MyAdapter adapter = new MyAdapter(getApplicationContext(),new ArrayList<GithubUser>());
             ListView listView = (ListView) findViewById(R.id.list);
             listView.setAdapter(adapter);
+            Log.e("I was touched", "here");
         }
     }
 }
