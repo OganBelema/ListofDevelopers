@@ -69,7 +69,7 @@ public class Main2Activity extends AppCompatActivity {
                     sendIntent.setAction(Intent.ACTION_SEND);
                     sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this awesome developer " + UppercaseUsername+ ", " + user_url + ".");
                     sendIntent.setType("text/plain");
-                    startActivity(sendIntent);
+                    startActivity(Intent.createChooser(sendIntent, "send"));
                 }
             });
 
