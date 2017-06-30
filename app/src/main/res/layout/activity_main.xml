@@ -17,13 +17,25 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="invisible"
+        android:textSize="26sp"
+        android:textStyle="bold"
         android:text="No data"/>
+    <TextView
+        android:id="@+id/no_internet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:text="No Internet 🙁"/>
     <ProgressBar
         android:id="@+id/loading_spinner"
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 </FrameLayout>
 
 
