@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResult> call, Throwable t) {
 
-                Toast.makeText(getApplicationContext(), "An error occurred while trying to get data. Please check ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "An error occurred while trying to get data. Please check network connection and try again. ", Toast.LENGTH_SHORT).show();
 
                 System.out.println("t" + t.getMessage());
 
