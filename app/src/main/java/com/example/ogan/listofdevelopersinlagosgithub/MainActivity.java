@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private int currentPage = PAGE_START;
     private int resultSize;
     RecyclerAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -55,6 +57,31 @@ public class MainActivity extends AppCompatActivity {
 
         recycler_view = (RecyclerView) findViewById(R.id.recyclerView);
         progressBar = (ProgressBar) findViewById(R.id.loading_spinner);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                // Refresh items
+                refreshItems();
+
+            }
+
+            void refreshItems() {
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+
+                // Load complete
+                onItemsLoadComplete();
+            }
+
+            void onItemsLoadComplete() {
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         recycler_view.setHasFixedSize(true);
         adapter = new RecyclerAdapter(getApplicationContext());
