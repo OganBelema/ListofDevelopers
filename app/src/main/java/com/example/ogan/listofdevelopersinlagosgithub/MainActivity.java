@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String URL = "https://api.github.com/";
 
     RecyclerView recycler_view;
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
     GetData getData;
 
     LinearLayoutManager linearLayoutManager;
