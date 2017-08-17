@@ -160,7 +160,7 @@ public class Main2Activity extends AppCompatActivity {
 
                                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                                                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                                                getWindow().setStatusBarColor(darkVibrant.getRgb());
+                                                getWindow().setStatusBarColor(swatch.getRgb());
                                             }
 
                                         }
