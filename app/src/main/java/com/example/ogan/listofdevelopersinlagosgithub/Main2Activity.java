@@ -145,7 +145,6 @@ public class Main2Activity extends AppCompatActivity {
                                     @Override
                                     public void onGenerated(Palette palette) {
                                         Palette.Swatch swatch = palette.getVibrantSwatch();
-                                        Palette.Swatch darkVibrant = palette.getDarkVibrantSwatch();
                                         if (swatch == null) {
                                             return;
                                         }
@@ -154,16 +153,10 @@ public class Main2Activity extends AppCompatActivity {
                                         toolbar.setBackgroundColor(swatch.getRgb());
                                         toolbar.setTitleTextColor(swatch.getTitleTextColor());
 
-                                        if (darkVibrant == null){
-                                            return;
-                                        }  else {
-
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                                                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                                                 getWindow().setStatusBarColor(swatch.getRgb());
                                             }
-
-                                        }
 
                                     }
                                 });
