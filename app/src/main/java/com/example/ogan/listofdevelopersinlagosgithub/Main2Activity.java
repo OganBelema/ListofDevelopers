@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -143,6 +145,7 @@ public class Main2Activity extends AppCompatActivity {
                                     @Override
                                     public void onGenerated(Palette palette) {
                                         Palette.Swatch swatch = palette.getVibrantSwatch();
+                                        Palette.Swatch darkVibrant = palette.getDarkVibrantSwatch();
                                         if (swatch == null) {
                                             return;
                                         }
@@ -150,6 +153,17 @@ public class Main2Activity extends AppCompatActivity {
                                         button.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
                                         toolbar.setBackgroundColor(swatch.getRgb());
                                         toolbar.setTitleTextColor(swatch.getTitleTextColor());
+
+                                        if (darkVibrant == null){
+                                            return;
+                                        }  else {
+
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                                                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                                                getWindow().setStatusBarColor(darkVibrant.getRgb());
+                                            }
+
+                                        }
 
                                     }
                                 });
