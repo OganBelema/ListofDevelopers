@@ -145,18 +145,21 @@ public class Main2Activity extends AppCompatActivity {
                                     @Override
                                     public void onGenerated(Palette palette) {
                                         Palette.Swatch swatch = palette.getVibrantSwatch();
-                                        if (swatch == null) {
+                                        Palette.Swatch darkVibrant = palette.getDarkVibrantSwatch();
+                                        Palette.Swatch muted = palette.getMutedSwatch();
+                                        if (swatch == null || darkVibrant == null || muted == null) {
                                             return;
                                         }
 
-                                        button.setBackgroundTintList(ColorStateList.valueOf(swatch.getRgb()));
                                         toolbar.setBackgroundColor(swatch.getRgb());
                                         toolbar.setTitleTextColor(swatch.getTitleTextColor());
+                                        button.setBackgroundTintList(ColorStateList.valueOf(muted.getRgb()));
 
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                                                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                                                getWindow().setStatusBarColor(swatch.getRgb());
+                                                getWindow().setStatusBarColor(darkVibrant.getRgb());
                                             }
+
 
                                     }
                                 });
@@ -172,7 +175,6 @@ public class Main2Activity extends AppCompatActivity {
 
                     }
                 });
-
     }
 
 
