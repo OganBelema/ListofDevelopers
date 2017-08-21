@@ -90,8 +90,8 @@ public class Main2Activity extends AppCompatActivity {
                     if (fullName != null) {
                         txtFullName.setText(fullName);
                     }
-                    String repoNumber = userResult.getPublicRepos().toString();
-                    repo.setText(repoNumber + " repositories");
+                    int repoNumber = userResult.getPublicRepos();
+                    repo.setText(String.format(getString(R.string.repositories), repoNumber));
                     txtUrl.setText(userUrl);
                     progressBar.setVisibility(View.INVISIBLE);
                     cardView.setVisibility(View.VISIBLE);

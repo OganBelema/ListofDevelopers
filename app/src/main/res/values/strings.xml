@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">List of Java Developers</string>
     <string name="no_fullName">Full name not provided</string>
+    <string name="repositories" formatted="false">%d repositories</string>
 </resources>
