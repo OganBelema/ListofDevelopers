@@ -13,7 +13,6 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,18 +32,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Main2Activity extends AppCompatActivity {
 
+    private static final String URL = "https://api.github.com/";
     TextView txtUrl;
     TextView txtFullName;
     TextView repo;
     CircleImageView imgAvatar;
     FloatingActionButton button;
     GetUser getUser;
-    private ProgressBar progressBar;
     CardView cardView;
     CoordinatorLayout coordinatorLayout;
     Toolbar toolbar;
-
-    private static final String URL = "https://api.github.com/";
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,37 +64,35 @@ public class Main2Activity extends AppCompatActivity {
 
         getUser = retrofit.create(GetUser.class);
 
+        //getting transferred intent from mainActivity
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
         final String uppercaseUsername = username.substring(0, 1).toUpperCase() + username.substring(1);
         final String userUrl = intent.getStringExtra("url");
         String avatar = intent.getStringExtra("avatar");
 
-        //setTitle(uppercaseUsername);
+        //setting toolbar title and back button
         toolbar.setTitle(uppercaseUsername);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
-
+        //making network call with retrofit
         Call<UserApi> call = getUser.getUserData(username);
         call.enqueue(new Callback<UserApi>() {
             @Override
             public void onResponse(Call<UserApi> call, Response<UserApi> response) {
-                System.out.println("error" + response.errorBody());
-                System.out.println("code" + response.code());
-
 
                 UserApi userResult = response.body();
 
                 if (userResult != null) {
                     String fullName = userResult.getName();
-                    if(fullName != null){
+                    if (fullName != null) {
                         txtFullName.setText(fullName);
                     }
                     String repoNumber = userResult.getPublicRepos().toString();
                     repo.setText(repoNumber + " repositories");
+                    txtUrl.setText(userUrl);
                     progressBar.setVisibility(View.INVISIBLE);
                     cardView.setVisibility(View.VISIBLE);
 
@@ -115,27 +111,28 @@ public class Main2Activity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getApplicationContext(), "An error occurred while trying to get data. Please check network connection and try again.", Toast.LENGTH_SHORT).show();
 
-                System.out.println("t" + t.getMessage());
 
             }
         });
 
-
+        //setting onClickListener for share fab
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this awesome lagos based java developer; " + uppercaseUsername+ ". " + userUrl );
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this awesome lagos based java developer; " + uppercaseUsername + ". " + userUrl);
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "Share GitHub user"));
             }
         });
 
-        txtUrl.setText(userUrl);
 
+
+        //to load image into imageView
         Picasso.with(getApplicationContext()).load(avatar).into(imgAvatar);
 
+        //this is for getting palette from avatar so as to customise view
         Picasso.with(getApplicationContext()).load(avatar)
                 .into(new Target() {
                     @Override
@@ -151,14 +148,16 @@ public class Main2Activity extends AppCompatActivity {
                                             return;
                                         }
 
+                                        //setting color of toolbar, title text and fab
                                         toolbar.setBackgroundColor(swatch.getRgb());
                                         toolbar.setTitleTextColor(swatch.getTitleTextColor());
                                         button.setBackgroundTintList(ColorStateList.valueOf(muted.getRgb()));
 
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                                                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                                                getWindow().setStatusBarColor(darkVibrant.getRgb());
-                                            }
+                                        //changing the color of status bar from lollipop and above from palette
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                                            getWindow().setStatusBarColor(darkVibrant.getRgb());
+                                        }
 
 
                                     }
