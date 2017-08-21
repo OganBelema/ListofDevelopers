@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     //Getting last page from the header
-                    String h = response.headers().get("Link");
-                    String[] l = h.split(",");
+                    String k = response.headers().get("Link");
+                    String[] l = k.split(",");
                     String[] m = l[1].split(";");
                     String[] n = m[0].split("page=");
                     String[] o = n[1].split(">");
