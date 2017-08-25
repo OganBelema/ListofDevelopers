@@ -7,15 +7,11 @@ import android.support.v7.widget.RecyclerView;
  * Created by ogan on 8/15/17.
  */
 
-public abstract class PaginationScrollListener extends RecyclerView.OnScrollListener {
+abstract class PaginationScrollListener extends RecyclerView.OnScrollListener {
 
-    LinearLayoutManager layoutManager;
+    private final LinearLayoutManager layoutManager;
 
-    /**
-     * Supporting only LinearLayoutManager for now.
-     *
-     * @param layoutManager
-     */
+
     public PaginationScrollListener(LinearLayoutManager layoutManager) {
         this.layoutManager = layoutManager;
     }

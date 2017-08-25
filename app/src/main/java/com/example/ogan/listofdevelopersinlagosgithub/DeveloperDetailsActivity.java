@@ -5,7 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,36 +33,32 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DeveloperDetailsActivity extends AppCompatActivity {
 
     private static final String URL = "https://api.github.com/";
-    TextView txtUrl;
-    TextView txtFullName;
-    TextView repo;
-    CircleImageView imgAvatar;
-    FloatingActionButton button;
-    GetUser getUser;
-    CardView cardView;
-    CoordinatorLayout coordinatorLayout;
-    Toolbar toolbar;
+    private TextView txtUrl;
+    private TextView txtFullName;
+    private TextView repo;
+    private FloatingActionButton button;
+    private CardView cardView;
+    private Toolbar toolbar;
     private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.developer_details_activity);
 
         progressBar = (ProgressBar) findViewById(R.id.pb_detail);
         txtUrl = (TextView) findViewById(R.id.user_url);
-        imgAvatar = (CircleImageView) findViewById(R.id.user_pic);
+        CircleImageView imgAvatar = (CircleImageView) findViewById(R.id.user_pic);
         button = (FloatingActionButton) findViewById(R.id.fabBtn);
         txtFullName = (TextView) findViewById(R.id.user_name);
         repo = (TextView) findViewById(R.id.repo_number);
         cardView = (CardView) findViewById(R.id.course_card);
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.rootLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(URL).
                 addConverterFactory(GsonConverterFactory.create()).build();
 
-        getUser = retrofit.create(GetUser.class);
+        GetUser getUser = retrofit.create(GetUser.class);
 
         //getting transferred intent from mainActivity
         Intent intent = getIntent();
@@ -74,14 +70,16 @@ public class DeveloperDetailsActivity extends AppCompatActivity {
         //setting toolbar title and back button
         toolbar.setTitle(uppercaseUsername);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
 
         //making network call with retrofit
         Call<UserApi> call = getUser.getUserData(username);
         call.enqueue(new Callback<UserApi>() {
             @Override
-            public void onResponse(Call<UserApi> call, Response<UserApi> response) {
+            public void onResponse(@NonNull Call<UserApi> call, @NonNull Response<UserApi> response) {
 
                 UserApi userResult = response.body();
 
@@ -91,7 +89,8 @@ public class DeveloperDetailsActivity extends AppCompatActivity {
                         txtFullName.setText(fullName);
                     }
                     int repoNumber = userResult.getPublicRepos();
-                    repo.setText(String.format(getString(R.string.repositories), repoNumber));
+                    String repositories = getResources().getString(R.string.repositories, repoNumber);
+                    repo.setText(repositories);
                     txtUrl.setText(userUrl);
                     progressBar.setVisibility(View.INVISIBLE);
                     cardView.setVisibility(View.VISIBLE);
@@ -106,7 +105,7 @@ public class DeveloperDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserApi> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserApi> call, @NonNull Throwable t) {
 
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getApplicationContext(), "An error occurred while trying to get data. Please check network connection and try again.", Toast.LENGTH_SHORT).show();
@@ -175,6 +174,7 @@ public class DeveloperDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 
 }

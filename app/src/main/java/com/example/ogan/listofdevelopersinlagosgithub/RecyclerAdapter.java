@@ -21,13 +21,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by ogan on 8/15/17.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;
 
 
-    private List<Item> itemList;
+    private final List<Item> itemList;
     private Context context;
 
     private boolean isLoadingAdded = false;
@@ -64,7 +64,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder,  int position) {
 
         switch (getItemViewType(position)) {
             case ITEM:
@@ -81,9 +81,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, DeveloperDetailsActivity.class);
-                        String username = itemList.get(position).getLogin();
-                        String url = itemList.get(position).getHtmlUrl();
-                        String avatar = itemList.get(position).getAvatarUrl();
+                        String username = itemList.get(holder.getAdapterPosition()).getLogin();
+                        String url = itemList.get(holder.getAdapterPosition()).getHtmlUrl();
+                        String avatar = itemList.get(holder.getAdapterPosition()).getAvatarUrl();
 
                         intent.putExtra("username", username);
                         intent.putExtra("url", url);
@@ -103,7 +103,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return itemList == null ? 0 : itemList.size();
+        return itemList.size();
     }
 
     @Override
@@ -117,7 +117,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
    _________________________________________________________________________________________________
     */
 
-    public void add(Item result) {
+    private void add(Item result) {
         itemList.add(result);
         notifyItemInserted(itemList.size() - 1);
     }
@@ -128,7 +128,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void remove(Item result) {
+    private void remove(Item result) {
         int position = itemList.indexOf(result);
         if (position > -1) {
             itemList.remove(position);
@@ -165,7 +165,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public Item getItem(int position) {
+    private Item getItem(int position) {
         return itemList.get(position);
     }
 
@@ -180,10 +180,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      */
 
 
-    protected class UserViewHolder extends RecyclerView.ViewHolder{
+    class UserViewHolder extends RecyclerView.ViewHolder{
 
-        TextView userName;
-        CircleImageView imageView;
+        final TextView userName;
+        final CircleImageView imageView;
 
 
 
@@ -196,7 +196,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-    protected class LoadingVH extends RecyclerView.ViewHolder {
+    class LoadingVH extends RecyclerView.ViewHolder {
 
         public LoadingVH(View itemView) {
             super(itemView);

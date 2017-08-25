@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<merge  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,41 +7,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swipeRefresh">
+
         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyclerView"
-            tools:context="com.example.ogan.listofdevelopersinlagosgithub.ListOfDevelopersActivity"/>
+            tools:context="com.example.ogan.listofdevelopersinlagosgithub.ListOfDevelopersActivity" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-   <!-- <TextView
-        android:id="@+id/no_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:text="No data"/>
-    <TextView
-        android:id="@+id/no_internet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:text="No Internet 🙁"/>-->
-    <ProgressBar
+   <ProgressBar
         android:id="@+id/loading_spinner"
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"/>
-</FrameLayout>
+</merge>
 
 
 
