@@ -24,7 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class ListOfDevelopersActivity extends AppCompatActivity {
 
     private static final String URL = "https://api.github.com/";
     private static final int PAGE_START = 1;
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
             void refreshItems() {
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ListOfDevelopersActivity.class);
                 startActivity(intent);
                 onItemsLoadComplete();
 
