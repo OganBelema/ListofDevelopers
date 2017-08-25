@@ -120,7 +120,7 @@ public class ListOfDevelopersActivity extends AppCompatActivity {
 
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Response message: " + response.message() + "with code: " + response.code(),
+                            "Response message: " + response.message() + " with code: " + response.code(),
                             Toast.LENGTH_SHORT).show();
                 }
 
@@ -198,7 +198,7 @@ public class ListOfDevelopersActivity extends AppCompatActivity {
                 } else {
 
                     Toast.makeText(getApplicationContext(),
-                            "Response message: " + response.message() + "with code: " + response.code(),
+                            "Response message: " + response.message() + " with code: " + response.code(),
                             Toast.LENGTH_SHORT).show();
 
                 }
