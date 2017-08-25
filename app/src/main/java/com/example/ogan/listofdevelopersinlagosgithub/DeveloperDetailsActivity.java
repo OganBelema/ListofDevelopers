@@ -143,22 +143,22 @@ public class DeveloperDetailsActivity extends AppCompatActivity {
                                         Palette.Swatch swatch = palette.getVibrantSwatch();
                                         Palette.Swatch darkVibrant = palette.getDarkVibrantSwatch();
                                         Palette.Swatch muted = palette.getMutedSwatch();
-                                        if (swatch == null || darkVibrant == null || muted == null) {
-                                            return;
+                                        if (swatch != null) {
+                                            //setting color of toolbar and title text
+                                            toolbar.setBackgroundColor(swatch.getRgb());
+                                            toolbar.setTitleTextColor(swatch.getTitleTextColor());
                                         }
-
-                                        //setting color of toolbar, title text and fab
-                                        toolbar.setBackgroundColor(swatch.getRgb());
-                                        toolbar.setTitleTextColor(swatch.getTitleTextColor());
-                                        button.setBackgroundTintList(ColorStateList.valueOf(muted.getRgb()));
-
-                                        //changing the color of status bar from lollipop and above from palette
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                                            getWindow().setStatusBarColor(darkVibrant.getRgb());
+                                        if (muted != null) {
+                                            //setting color of fab
+                                            button.setBackgroundTintList(ColorStateList.valueOf(muted.getRgb()));
                                         }
-
-
+                                        if (darkVibrant != null) {
+                                            //changing the color of status bar from lollipop and above from palette
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                                                getWindow().setStatusBarColor(darkVibrant.getRgb());
+                                            }
+                                        }
                                     }
                                 });
                     }
