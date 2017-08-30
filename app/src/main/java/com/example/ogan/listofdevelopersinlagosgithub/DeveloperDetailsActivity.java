@@ -98,9 +98,7 @@ public class DeveloperDetailsActivity extends AppCompatActivity {
                 } else {
 
                     progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(),
-                            "Response message: " + response.message() + " with code: " + response.code(),
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error loading data", Toast.LENGTH_SHORT).show();
 
                 }
 
