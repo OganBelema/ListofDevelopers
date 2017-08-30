@@ -47,25 +47,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@android:color/black"
                     android:text="@string/no_fullName"
                     android:drawableLeft="@drawable/ic_person_24dp"
                     android:drawableStart="@drawable/ic_person_24dp"
                     android:drawablePadding="8dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="16dp"
                     android:id="@+id/user_name"/>
 
                 <TextView
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@android:color/black"
                     android:drawableLeft="@drawable/briefcase"
                     android:drawableStart="@drawable/briefcase"
                     android:drawablePadding="8dp"
                     android:id="@+id/repo_number"/>
 
                 <TextView
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="web"
