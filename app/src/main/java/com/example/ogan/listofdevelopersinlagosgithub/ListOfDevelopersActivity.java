@@ -3,16 +3,11 @@ package com.example.ogan.listofdevelopersinlagosgithub;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult;
@@ -27,62 +22,32 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ListOfDevelopersActivity extends AppCompatActivity {
+public class ListOfDevelopersActivity extends AppCompatActivity implements ListOfDevelopersViewMvcImpl.Listener {
 
     private static final String URL = "https://api.github.com/";
     private static final int PAGE_START = 1;
     private GetData getData;
 
-    private RecyclerAdapter adapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private ProgressBar progressBar;
+
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 1;
     private int currentPage = PAGE_START;
 
+    private ListOfDevelopersViewMvc mListOfDevelopersViewMvc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_of_developers_activity);
 
-        RecyclerView recycler_view = (RecyclerView) findViewById(R.id.recyclerView);
-        progressBar = (ProgressBar) findViewById(R.id.loading_spinner);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        mListOfDevelopersViewMvc = new ListOfDevelopersViewMvcImpl(LayoutInflater.from(this), null);
+        mListOfDevelopersViewMvc.registerListener(this);
+        setContentView(mListOfDevelopersViewMvc.getRootView());
 
-        //setting on refresh listener to reload data when view is pull down
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        loadData();
+    }
 
-                refreshItems();
-
-            }
-
-            void refreshItems() {
-
-                Intent intent = new Intent(getApplicationContext(), ListOfDevelopersActivity.class);
-                startActivity(intent);
-                onItemsLoadComplete();
-
-            }
-
-            void onItemsLoadComplete() {
-
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
-        recycler_view.setHasFixedSize(true);
-        adapter = new RecyclerAdapter(getApplicationContext());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recycler_view.setLayoutManager(linearLayoutManager);
-        recycler_view.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        recycler_view.setAdapter(adapter);
-
-
+    private void loadData() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(URL).
                 addConverterFactory(GsonConverterFactory.create()).build();
 
@@ -94,7 +59,7 @@ public class ListOfDevelopersActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
 
-                progressBar.setVisibility(View.INVISIBLE);
+                mListOfDevelopersViewMvc.hideProgressBar();
 
                 if (response.isSuccessful()) {
 
@@ -111,10 +76,11 @@ public class ListOfDevelopersActivity extends AppCompatActivity {
                     ApiResult apiResult = response.body();
                     if (apiResult != null) {
                         ArrayList<Item> data = apiResult.getItems();
-                        adapter.addAll(data);
+                        mListOfDevelopersViewMvc.bindData(data);
+
 
                         //implementing the pagination to load more results
-                        if (currentPage <= TOTAL_PAGES) adapter.addLoadingFooter();
+                        if (currentPage <= TOTAL_PAGES) mListOfDevelopersViewMvc.showLoadingFooter();
                         else isLastPage = true;
                     }
 
@@ -130,47 +96,13 @@ public class ListOfDevelopersActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ApiResult> call, @NonNull Throwable t) {
 
-                progressBar.setVisibility(View.INVISIBLE);
+                mListOfDevelopersViewMvc.hideProgressBar();
                 Toast.makeText(getApplicationContext(), "An error occurred while trying to get data. Please check network connection and try again. ", Toast.LENGTH_SHORT).show();
 
                 System.out.println("t" + t.getMessage());
 
             }
         });
-
-        //applying modified onScrollListener to the recyclerView
-        recycler_view.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
-            @Override
-            protected void loadMoreItems() {
-                isLoading = true;
-                currentPage += 1;
-
-                // mocking network delay for API call
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadNextPage();
-                    }
-                }, 1000);
-            }
-
-            @Override
-            public int getTotalPageCount() {
-                return TOTAL_PAGES;
-            }
-
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
-        });
-
-
     }
 
     //to load the next page of results from the API
@@ -182,7 +114,7 @@ public class ListOfDevelopersActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
 
                 if (response.isSuccessful()) {
-                    adapter.removeLoadingFooter();
+                    mListOfDevelopersViewMvc.removeLoadingFooter();
                     isLoading = false;
 
                     ApiResult apiResult = response.body();
@@ -190,9 +122,9 @@ public class ListOfDevelopersActivity extends AppCompatActivity {
                     if (apiResult != null) {
                         ArrayList<Item> data = apiResult.getItems();
 
-                        adapter.addAll(data);
+                        mListOfDevelopersViewMvc.bindData(data);
 
-                        if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
+                        if (currentPage != TOTAL_PAGES) mListOfDevelopersViewMvc.showLoadingFooter();
                         else isLastPage = true;
                     }
                 } else {
@@ -237,5 +169,44 @@ public class ListOfDevelopersActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void refreshItems() {
+        Intent intent = new Intent(getApplicationContext(), ListOfDevelopersActivity.class);
+        startActivity(intent);
+    }
 
+
+    @Override
+    public void loadMoreItems() {
+        isLoading = true;
+        currentPage += 1;
+
+        // mocking network delay for API call
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadNextPage();
+            }
+        }, 1000);
+    }
+
+    @Override
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshItems();
+        mListOfDevelopersViewMvc.stopRefreshing();
+    }
+
+    @Override
+    public int getTotalPageCount() {
+        return TOTAL_PAGES;
+    }
+
+    @Override
+    public boolean isLastPage() {
+        return isLastPage;
+    }
 }
