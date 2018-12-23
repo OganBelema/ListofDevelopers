@@ -8,16 +8,16 @@ import android.view.ViewGroup;
  * Created by Belema Ogan on 12/23/2018.
  */
 
-public class LoaderViewMvcImpl implements LoaderViewMvc{
+public class ViewMvcImpl implements ViewMvc {
 
     private final View mLoaderView;
 
-    public LoaderViewMvcImpl(LayoutInflater inflater, ViewGroup parent){
+    public ViewMvcImpl(LayoutInflater inflater, ViewGroup parent){
         mLoaderView = inflater.inflate(R.layout.pagination_loading_layout, parent, false);
     }
 
     @Override
-    public View getLoaderView() {
+    public View getRootView() {
         return mLoaderView;
     }
 }

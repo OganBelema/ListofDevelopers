@@ -14,17 +14,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Belema Ogan on 12/22/2018.
  */
 
-interface DeveloperDetailViewMvc {
+interface DeveloperDetailViewMvc extends ObservableViewMvc<DeveloperDetailViewMvc.Listener>{
 
     public interface Listener {
         void floatingActionButtonClicked();
     }
-
-    void registerListener(Listener listener);
-
-    void unregisterListener(Listener listener);
-
-    View getRootView();
 
     void displayData(UserApi userResult, String userUrl);
 

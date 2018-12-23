@@ -49,7 +49,7 @@ public class DeveloperListItemViewMvcImpl implements DeveloperListItemViewMvc {
 
 
     @Override
-    public View getUserView() {
+    public View getRootView() {
         return mUserView;
     }
 
@@ -64,7 +64,7 @@ public class DeveloperListItemViewMvcImpl implements DeveloperListItemViewMvc {
     }
 
     private Context getContext() {
-        return getUserView().getContext();
+        return getRootView().getContext();
     }
 
     @Override

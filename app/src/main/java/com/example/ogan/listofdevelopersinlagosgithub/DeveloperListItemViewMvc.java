@@ -8,18 +8,12 @@ import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
  * Created by Belema Ogan on 12/23/2018.
  */
 
-public interface DeveloperListItemViewMvc {
+public interface DeveloperListItemViewMvc extends ObservableViewMvc<DeveloperListItemViewMvc.Listener>{
 
     public interface Listener {
         void onDevelopClicked(Item item);
     }
 
-    View getUserView();
-
     void bindDeveloper(Item item);
-
-    void registerListener(Listener listener);
-
-    void unregisterListener(Listener listener);
 
 }

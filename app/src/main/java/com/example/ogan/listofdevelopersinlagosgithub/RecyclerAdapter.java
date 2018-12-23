@@ -45,8 +45,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> impl
                 developerListItemViewMvc.registerListener(this);
                 break;
             case LOADING:
-                LoaderViewMvc loaderViewMvc = new LoaderViewMvcImpl(inflater, parent);
-                viewHolder = new LoadingVH(loaderViewMvc);
+                ViewMvc viewMvc = new ViewMvcImpl(inflater, parent);
+                viewHolder = new LoadingVH(viewMvc);
                 break;
         }
         return viewHolder;
@@ -165,15 +165,15 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> impl
         private final DeveloperListItemViewMvc mDeveloperListItemViewMvc;
 
         public UserViewHolder(DeveloperListItemViewMvc developerListItemViewMvc){
-            super(developerListItemViewMvc.getUserView());
+            super(developerListItemViewMvc.getRootView());
             mDeveloperListItemViewMvc = developerListItemViewMvc;
         }
     }
 
     class LoadingVH extends RecyclerView.ViewHolder {
 
-        public LoadingVH(LoaderViewMvc loaderViewMvc) {
-            super(loaderViewMvc.getLoaderView());
+        public LoadingVH(ViewMvc viewMvc) {
+            super(viewMvc.getRootView());
         }
     }
 

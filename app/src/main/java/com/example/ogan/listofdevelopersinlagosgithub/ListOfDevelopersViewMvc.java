@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by Belema Ogan on 12/22/2018.
  */
 
-interface ListOfDevelopersViewMvc {
+interface ListOfDevelopersViewMvc extends ObservableViewMvc<ListOfDevelopersViewMvc.Listener>{
 
     public interface Listener {
 
@@ -25,11 +25,6 @@ interface ListOfDevelopersViewMvc {
         boolean isLastPage();
 
     }
-    void registerListener(Listener listener);
-
-    void unregisterListener(Listener listener);
-
-    View getRootView();
 
     void stopRefreshing();
 
