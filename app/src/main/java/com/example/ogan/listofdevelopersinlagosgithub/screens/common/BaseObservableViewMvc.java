@@ -24,6 +24,7 @@ public abstract class BaseObservableViewMvc <ListenerType> extends BaseViewMvc
     }
 
     protected Set<ListenerType> getListeners(){
+        //an example of defensive programming, protects the set from being modified
         return Collections.unmodifiableSet(mListeners);
     }
 }
