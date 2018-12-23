@@ -1,4 +1,6 @@
-package com.example.ogan.listofdevelopersinlagosgithub;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.common;
+
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvc;
 
 /**
  * Created by Belema Ogan on 12/23/2018.

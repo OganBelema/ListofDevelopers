@@ -1,4 +1,4 @@
-package com.example.ogan.listofdevelopersinlagosgithub;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -18,11 +18,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.R;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservableViewMvc;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,9 +30,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Belema Ogan on 12/21/2018.
  */
 
-public class DeveloperDetailViewMvcImpl implements View.OnClickListener, DeveloperDetailViewMvc {
+public class DeveloperDetailViewMvcImpl extends BaseObservableViewMvc<DeveloperDetailViewMvc.Listener>
+        implements View.OnClickListener, DeveloperDetailViewMvc {
 
-    private final View mRootView;
     private TextView mTxtUrlTextView;
     private TextView mTxtFullNameTextView;
     private TextView mRepoTextView;
@@ -41,10 +41,9 @@ public class DeveloperDetailViewMvcImpl implements View.OnClickListener, Develop
     private Toolbar mToolbar;
     private ProgressBar mProgressBar;
     private final CircleImageView mAvatarView;
-    private final List<Listener> mListeners = new ArrayList<>();
 
     public DeveloperDetailViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
-        mRootView = inflater.inflate(R.layout.developer_details_activity, parent, false);
+        setRootView(inflater.inflate(R.layout.developer_details_activity, parent, false));
         mProgressBar = (ProgressBar) findViewById(R.id.pb_detail);
         mTxtUrlTextView = (TextView) findViewById(R.id.user_url);
         mAvatarView = (CircleImageView) findViewById(R.id.user_pic);
@@ -55,29 +54,6 @@ public class DeveloperDetailViewMvcImpl implements View.OnClickListener, Develop
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         mButton.setOnClickListener(this);
-    }
-
-    @Override
-    public void registerListener(Listener listener){
-        mListeners.add(listener);
-    }
-
-    @Override
-    public void unregisterListener(Listener listener){
-        mListeners.remove(listener);
-    }
-
-    private Context getContext(){
-        return getRootView().getContext();
-    }
-
-    private View findViewById(int id){
-        return getRootView().findViewById(id);
-    }
-
-    @Override
-    public View getRootView() {
-        return mRootView;
     }
 
     @Override
@@ -176,7 +152,7 @@ public class DeveloperDetailViewMvcImpl implements View.OnClickListener, Develop
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fabBtn:
-                for (Listener listener : mListeners){
+                for (Listener listener : getListeners()){
                     listener.floatingActionButtonClicked();
                 }
                 break;

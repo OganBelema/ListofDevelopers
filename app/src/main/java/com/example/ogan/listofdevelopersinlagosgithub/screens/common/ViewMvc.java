@@ -1,4 +1,4 @@
-package com.example.ogan.listofdevelopersinlagosgithub;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.common;
 
 import android.view.View;
 

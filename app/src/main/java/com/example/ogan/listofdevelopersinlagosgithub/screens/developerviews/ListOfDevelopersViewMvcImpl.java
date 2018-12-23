@@ -1,4 +1,4 @@
-package com.example.ogan.listofdevelopersinlagosgithub;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,19 +11,18 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.R;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservableViewMvc;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Belema Ogan on 12/21/2018.
  */
 
-public class ListOfDevelopersViewMvcImpl implements SwipeRefreshLayout.OnRefreshListener, ListOfDevelopersViewMvc {
+public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDevelopersViewMvc.Listener>
+        implements SwipeRefreshLayout.OnRefreshListener, ListOfDevelopersViewMvc {
 
-    private final List<Listener> mListeners = new ArrayList<>();
-
-    private final View mRootView;
     private final RecyclerView mRecyclerView;
     private final ProgressBar mProgressBar;
     private final SwipeRefreshLayout mSwipeRefreshLayout;
@@ -32,10 +31,10 @@ public class ListOfDevelopersViewMvcImpl implements SwipeRefreshLayout.OnRefresh
 
     public ListOfDevelopersViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
 
-        mRootView = inflater.inflate(R.layout.list_of_developers_activity, parent, false);
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recyclerView);
-        mProgressBar = (ProgressBar) mRootView.findViewById(R.id.loading_spinner);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
+        setRootView(inflater.inflate(R.layout.list_of_developers_activity, parent, false));
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mProgressBar = (ProgressBar) findViewById(R.id.loading_spinner);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
 
         mRecyclerAdapter = new RecyclerAdapter(getContext());
 
@@ -52,7 +51,7 @@ public class ListOfDevelopersViewMvcImpl implements SwipeRefreshLayout.OnRefresh
         mPaginationScrollListener = new PaginationScrollListener(linearLayoutManager) {
             @Override
             protected void loadMoreItems() {
-                for (Listener listener: mListeners){
+                for (Listener listener: getListeners()){
                     listener.loadMoreItems();
                 }
             }
@@ -61,7 +60,7 @@ public class ListOfDevelopersViewMvcImpl implements SwipeRefreshLayout.OnRefresh
             public int getTotalPageCount() {
                 int totalPageCount = 0;
 
-                for (Listener listener : mListeners){
+                for (Listener listener : getListeners()){
                    totalPageCount  = listener.getTotalPageCount();
                 }
 
@@ -72,7 +71,7 @@ public class ListOfDevelopersViewMvcImpl implements SwipeRefreshLayout.OnRefresh
             public boolean isLastPage() {
                 boolean isLastPage = false;
 
-                for (Listener listener : mListeners){
+                for (Listener listener : getListeners()){
                     isLastPage = listener.isLastPage();
                 }
 
@@ -83,7 +82,7 @@ public class ListOfDevelopersViewMvcImpl implements SwipeRefreshLayout.OnRefresh
             public boolean isLoading() {
                  boolean isLoading = false;
 
-                 for (Listener listener: mListeners){
+                 for (Listener listener: getListeners()){
                      isLoading = listener.isLoading();
                  }
 
@@ -97,27 +96,8 @@ public class ListOfDevelopersViewMvcImpl implements SwipeRefreshLayout.OnRefresh
     }
 
     @Override
-    public void registerListener(Listener listener){
-        mListeners.add(listener);
-    }
-
-    @Override
-    public void unregisterListener(Listener listener){
-        mListeners.remove(listener);
-    }
-
-    private Context getContext() {
-        return mRootView.getContext();
-    }
-
-    @Override
-    public View getRootView(){
-        return mRootView;
-    }
-
-    @Override
     public void onRefresh() {
-        for (Listener listener: mListeners){
+        for (Listener listener: getListeners()){
             listener.onRefresh();
         }
     }

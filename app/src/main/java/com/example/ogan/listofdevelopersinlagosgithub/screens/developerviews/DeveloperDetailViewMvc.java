@@ -1,20 +1,17 @@
-package com.example.ogan.listofdevelopersinlagosgithub;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.content.res.ColorStateList;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Window;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ObservableViewMvc;
 
 /**
  * Created by Belema Ogan on 12/22/2018.
  */
 
-interface DeveloperDetailViewMvc extends ObservableViewMvc<DeveloperDetailViewMvc.Listener>{
+interface DeveloperDetailViewMvc extends ObservableViewMvc<DeveloperDetailViewMvc.Listener> {
 
     public interface Listener {
         void floatingActionButtonClicked();

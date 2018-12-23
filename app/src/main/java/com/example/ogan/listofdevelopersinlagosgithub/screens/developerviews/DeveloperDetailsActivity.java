@@ -1,22 +1,16 @@
-package com.example.ogan.listofdevelopersinlagosgithub;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
-import android.view.WindowManager;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.GetUser;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,16 +18,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DeveloperDetailsActivity extends AppCompatActivity implements DeveloperDetailViewMvcImpl.Listener {
+public class DeveloperDetailsActivity extends AppCompatActivity implements DeveloperDetailViewMvc.Listener {
 
     private static final String URL = "https://api.github.com/";
     private DeveloperDetailViewMvc mDeveloperDetailViewMvc;
     private String mUppercaseUsername;
     private String mUserUrl;
 
-    public static final String USERNAME_KEY = "com.example.ogan.listofdevelopersinlagosgithub.USERNAME";
-    public static final String URL_KEY = "com.example.ogan.listofdevelopersinlagosgithub.URL";
-    public static final String AVATAR_KEY = "com.example.ogan.listofdevelopersinlagosgithub.AVATAR";
+    public static final String USERNAME_KEY =
+            "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.USERNAME";
+
+    public static final String URL_KEY =
+            "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.URL";
+
+    public static final String AVATAR_KEY =
+            "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.AVATAR";
 
 
     @Override
@@ -69,6 +68,17 @@ public class DeveloperDetailsActivity extends AppCompatActivity implements Devel
 
         //this is for getting palette from avatar so as to customise view
         mDeveloperDetailViewMvc.customiseView(avatar, getWindow());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadData(String username) {

@@ -1,4 +1,4 @@
-package com.example.ogan.listofdevelopersinlagosgithub;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GetData;
+import com.example.ogan.listofdevelopersinlagosgithub.R;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ListOfDevelopersActivity extends AppCompatActivity implements ListOfDevelopersViewMvcImpl.Listener {
+public class ListOfDevelopersActivity extends AppCompatActivity implements ListOfDevelopersViewMvc.Listener {
 
     private static final String URL = "https://api.github.com/";
     private static final int PAGE_START = 1;

@@ -1,8 +1,7 @@
-package com.example.ogan.listofdevelopersinlagosgithub;
-
-import android.view.View;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ObservableViewMvc;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
  * Created by Belema Ogan on 12/22/2018.
  */
 
-interface ListOfDevelopersViewMvc extends ObservableViewMvc<ListOfDevelopersViewMvc.Listener>{
+interface ListOfDevelopersViewMvc extends ObservableViewMvc<ListOfDevelopersViewMvc.Listener> {
 
     public interface Listener {
 
