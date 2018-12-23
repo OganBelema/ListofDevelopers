@@ -3,7 +3,6 @@ package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,8 +11,10 @@ import android.widget.Toast;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GetData;
+import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GithubApi;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
+import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -23,11 +24,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ListOfDevelopersActivity extends AppCompatActivity implements ListOfDevelopersViewMvc.Listener {
+public class ListOfDevelopersActivity extends BaseActivity implements ListOfDevelopersViewMvc.Listener {
 
-    private static final String URL = "https://api.github.com/";
     private static final int PAGE_START = 1;
-    private GetData getData;
+    private GithubApi mGithubApi;
 
 
     private boolean isLoading = false;
@@ -45,18 +45,15 @@ public class ListOfDevelopersActivity extends AppCompatActivity implements ListO
         mListOfDevelopersViewMvc.registerListener(this);
         setContentView(mListOfDevelopersViewMvc.getRootView());
 
+        mGithubApi = getCompositionRoot().getGithubApi();
+
         loadData();
     }
 
     private void loadData() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(URL).
-                addConverterFactory(GsonConverterFactory.create()).build();
-
-        getData = retrofit.create(GetData.class);
 
         //performing network call with retrofit
-        Call<ApiResult> call = getData.getGithubUser(currentPage);
-        call.enqueue(new Callback<ApiResult>() {
+        mGithubApi.getGithubUser(currentPage).enqueue(new Callback<ApiResult>() {
             @Override
             public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
 
@@ -109,8 +106,7 @@ public class ListOfDevelopersActivity extends AppCompatActivity implements ListO
     //to load the next page of results from the API
     private void loadNextPage() {
 
-        Call<ApiResult> call = getData.getGithubUser(currentPage);
-        call.enqueue(new Callback<ApiResult>() {
+        mGithubApi.getGithubUser(currentPage).enqueue(new Callback<ApiResult>() {
             @Override
             public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
 

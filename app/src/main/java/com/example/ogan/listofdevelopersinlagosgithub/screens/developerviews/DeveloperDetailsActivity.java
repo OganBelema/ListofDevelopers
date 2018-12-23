@@ -3,14 +3,15 @@ package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.GetUser;
+import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GithubApi;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,9 +19,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DeveloperDetailsActivity extends AppCompatActivity implements DeveloperDetailViewMvc.Listener {
+public class DeveloperDetailsActivity extends BaseActivity implements DeveloperDetailViewMvc.Listener {
 
-    private static final String URL = "https://api.github.com/";
     private DeveloperDetailViewMvc mDeveloperDetailViewMvc;
     private String mUppercaseUsername;
     private String mUserUrl;
@@ -33,6 +33,7 @@ public class DeveloperDetailsActivity extends AppCompatActivity implements Devel
 
     public static final String AVATAR_KEY =
             "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.AVATAR";
+    private GithubApi mGithubApi;
 
 
     @Override
@@ -58,6 +59,7 @@ public class DeveloperDetailsActivity extends AppCompatActivity implements Devel
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        mGithubApi = getCompositionRoot().getGithubApi();
 
         //making network call with retrofit
         loadData(username);
@@ -82,12 +84,8 @@ public class DeveloperDetailsActivity extends AppCompatActivity implements Devel
     }
 
     private void loadData(String username) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(URL).
-                addConverterFactory(GsonConverterFactory.create()).build();
 
-        GetUser getUser = retrofit.create(GetUser.class);
-        Call<UserApi> call = getUser.getUserData(username);
-        call.enqueue(new Callback<UserApi>() {
+        mGithubApi.getUserData(username).enqueue(new Callback<UserApi>() {
             @Override
             public void onResponse(@NonNull Call<UserApi> call, @NonNull Response<UserApi> response) {
 
