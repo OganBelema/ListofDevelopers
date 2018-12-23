@@ -209,4 +209,10 @@ public class ListOfDevelopersActivity extends AppCompatActivity implements ListO
     public boolean isLastPage() {
         return isLastPage;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mListOfDevelopersViewMvc.unregisterListener(this);
+    }
 }
