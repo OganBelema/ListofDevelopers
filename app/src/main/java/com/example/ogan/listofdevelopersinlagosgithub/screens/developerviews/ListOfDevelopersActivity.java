@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,7 +12,6 @@ import com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GithubApi;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
-import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseActivity;
 
 import java.util.ArrayList;
@@ -21,8 +19,6 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListOfDevelopersActivity extends BaseActivity implements ListOfDevelopersViewMvc.Listener {
 
@@ -41,7 +37,7 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mListOfDevelopersViewMvc = new ListOfDevelopersViewMvcImpl(LayoutInflater.from(this), null);
+        mListOfDevelopersViewMvc = getCompositionRoot().getViewMvcFactory().getListOfDevelopersViewMvc(null);
         mListOfDevelopersViewMvc.registerListener(this);
         setContentView(mListOfDevelopersViewMvc.getRootView());
 

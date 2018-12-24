@@ -11,7 +11,7 @@ import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ObservableV
  * Created by Belema Ogan on 12/22/2018.
  */
 
-interface DeveloperDetailViewMvc extends ObservableViewMvc<DeveloperDetailViewMvc.Listener> {
+public interface DeveloperDetailViewMvc extends ObservableViewMvc<DeveloperDetailViewMvc.Listener> {
 
     public interface Listener {
         void floatingActionButtonClicked();

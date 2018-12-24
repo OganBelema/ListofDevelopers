@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GithubApi;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvcFactory;
 
 /**
  * Created by Belema Ogan on 12/23/2018.
@@ -25,6 +26,10 @@ public class ControllerCompositionRoot {
 
     public LayoutInflater getLayoutInflater(){
         return LayoutInflater.from(mActivity);
+    }
+
+    public ViewMvcFactory getViewMvcFactory(){
+        return new ViewMvcFactory(getLayoutInflater());
     }
 
 

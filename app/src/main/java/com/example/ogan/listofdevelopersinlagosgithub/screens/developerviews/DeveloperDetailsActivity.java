@@ -40,7 +40,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDeveloperDetailViewMvc = new DeveloperDetailViewMvcImpl(LayoutInflater.from(this), null);
+        mDeveloperDetailViewMvc = getCompositionRoot().getViewMvcFactory().getDeveloperDetailViewMvc(null);
         mDeveloperDetailViewMvc.registerListener(this);
 
         setContentView(mDeveloperDetailViewMvc.getRootView());

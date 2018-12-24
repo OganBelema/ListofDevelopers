@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Belema Ogan on 12/22/2018.
  */
 
-interface ListOfDevelopersViewMvc extends ObservableViewMvc<ListOfDevelopersViewMvc.Listener> {
+public interface ListOfDevelopersViewMvc extends ObservableViewMvc<ListOfDevelopersViewMvc.Listener> {
 
     public interface Listener {
 
