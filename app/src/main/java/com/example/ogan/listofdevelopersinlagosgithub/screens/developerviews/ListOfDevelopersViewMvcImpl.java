@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservableViewMvc;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvcFactory;
 
 import java.util.ArrayList;
 
@@ -29,14 +30,14 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
     private final RecyclerAdapter mRecyclerAdapter;
     private final PaginationScrollListener mPaginationScrollListener;
 
-    public ListOfDevelopersViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
+    public ListOfDevelopersViewMvcImpl(LayoutInflater inflater, ViewGroup parent, ViewMvcFactory viewMvcFactory) {
 
         setRootView(inflater.inflate(R.layout.list_of_developers_activity, parent, false));
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mProgressBar = (ProgressBar) findViewById(R.id.loading_spinner);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
 
-        mRecyclerAdapter = new RecyclerAdapter(getContext());
+        mRecyclerAdapter = new RecyclerAdapter(getContext(), viewMvcFactory);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 

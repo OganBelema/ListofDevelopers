@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvc;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvcFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,31 +23,31 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> impl
     private static final int LOADING = 1;
 
 
-    private final List<Item> mItemList;
+    private final List<Item> mItemList = new ArrayList<>();
     private Context mContext;
+    private ViewMvcFactory mViewMvcFactory;
 
     private boolean mIsLoadingAdded = false;
 
-    public RecyclerAdapter(Context context) {
+    public RecyclerAdapter(Context context, ViewMvcFactory viewMvcFactory) {
         mContext = context;
-        mItemList = new ArrayList<>();
+        mViewMvcFactory = viewMvcFactory;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
-        LayoutInflater inflater = LayoutInflater.from(mContext);
 
         switch (viewType) {
             case ITEM:
                 DeveloperListItemViewMvc developerListItemViewMvc =
-                        new DeveloperListItemViewMvcImpl(inflater, parent);
+                        mViewMvcFactory.getDeveloperListItemViewMvc(parent);
                 viewHolder = new UserViewHolder(developerListItemViewMvc);
                 developerListItemViewMvc.registerListener(this);
                 break;
             case LOADING:
-                ViewMvc viewMvc = new ViewMvcImpl(inflater, parent);
+                ViewMvc viewMvc = mViewMvcFactory.getViewMvc(parent);
                 viewHolder = new LoadingVH(viewMvc);
                 break;
         }
