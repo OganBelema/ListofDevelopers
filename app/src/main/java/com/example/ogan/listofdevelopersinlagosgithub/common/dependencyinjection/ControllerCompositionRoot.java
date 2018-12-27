@@ -3,7 +3,9 @@ package com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjectio
 import android.app.Activity;
 import android.view.LayoutInflater;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GithubApi;
+import com.example.ogan.listofdevelopersinlagosgithub.network.FetchGithubUserListUseCase;
+import com.example.ogan.listofdevelopersinlagosgithub.network.FetchUserDataUseCase;
+import com.example.ogan.listofdevelopersinlagosgithub.network.GithubApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvcFactory;
 
 /**
@@ -33,4 +35,11 @@ public class ControllerCompositionRoot {
     }
 
 
+    public FetchUserDataUseCase getFetchUserDataUseCase() {
+        return new FetchUserDataUseCase(getGithubApi());
+    }
+
+    public FetchGithubUserListUseCase getFetchGithubUserListUseCase() {
+        return new FetchGithubUserListUseCase(getGithubApi());
+    }
 }

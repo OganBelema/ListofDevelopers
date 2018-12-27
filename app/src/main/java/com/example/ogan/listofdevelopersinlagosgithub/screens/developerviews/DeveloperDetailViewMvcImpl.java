@@ -1,6 +1,5 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -17,7 +16,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.network.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservableViewMvc;
 import com.squareup.picasso.Picasso;
@@ -57,7 +56,7 @@ public class DeveloperDetailViewMvcImpl extends BaseObservableViewMvc<DeveloperD
     }
 
     @Override
-    public void displayData(UserApi userResult, String userUrl) {
+    public void displayData(UserApi userResult) {
         String fullName = userResult.getName();
         if (fullName != null) {
             mTxtFullNameTextView.setText(fullName);
@@ -65,7 +64,7 @@ public class DeveloperDetailViewMvcImpl extends BaseObservableViewMvc<DeveloperD
         int repoNumber = userResult.getPublicRepos();
         String repositories = getContext().getResources().getString(R.string.repositories, repoNumber);
         mRepoTextView.setText(repositories);
-        mTxtUrlTextView.setText(userUrl);
+        mTxtUrlTextView.setText(userResult.getHtmlUrl());
     }
 
     @Override
@@ -89,50 +88,39 @@ public class DeveloperDetailViewMvcImpl extends BaseObservableViewMvc<DeveloperD
     }
 
     @Override
-    public void setProfileImage(String imageUrl) {
-        Picasso.with(getContext()).load(imageUrl).into(mAvatarView);
+    public void setProfileImage(Bitmap bitmap) {
+        mAvatarView.setImageBitmap(bitmap);
     }
 
     @Override
-    public void customiseView(String imageUrl, final Window window) {
-        Picasso.with(getContext()).load(imageUrl)
-                .into(new Target() {
+    public void setProfileImage(Drawable drawable) {
+        mAvatarView.setImageDrawable(drawable);
+    }
+
+    @Override
+    public void customiseView(Bitmap bitmap, final Window window) {
+        Palette.from(bitmap)
+                .generate(new Palette.PaletteAsyncListener() {
                     @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        Palette.from(bitmap)
-                                .generate(new Palette.PaletteAsyncListener() {
-                                    @Override
-                                    public void onGenerated(Palette palette) {
-                                        Palette.Swatch swatch = palette.getVibrantSwatch();
-                                        Palette.Swatch darkVibrant = palette.getDarkVibrantSwatch();
-                                        Palette.Swatch muted = palette.getMutedSwatch();
-                                        if (swatch != null) {
-                                            //setting color of toolbar and title text
-                                            customiseToolbar(swatch.getRgb(),swatch.getTitleTextColor());
-                                        }
-                                        if (muted != null) {
-                                            //setting color of fab
-                                            customiseFloatingActionBar(ColorStateList.valueOf(muted.getRgb()));
-                                        }
-                                        if (darkVibrant != null) {
-                                            //changing the color of status bar from lollipop and above from palette
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                                                window.setStatusBarColor(darkVibrant.getRgb());
-                                            }
-                                        }
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                    public void onGenerated(Palette palette) {
+                        Palette.Swatch swatch = palette.getVibrantSwatch();
+                        Palette.Swatch darkVibrant = palette.getDarkVibrantSwatch();
+                        Palette.Swatch muted = palette.getMutedSwatch();
+                        if (swatch != null) {
+                            //setting color of toolbar and title text
+                            customiseToolbar(swatch.getRgb(),swatch.getTitleTextColor());
+                        }
+                        if (muted != null) {
+                            //setting color of fab
+                            customiseFloatingActionBar(ColorStateList.valueOf(muted.getRgb()));
+                        }
+                        if (darkVibrant != null) {
+                            //changing the color of status bar from lollipop and above from palette
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                                window.setStatusBarColor(darkVibrant.getRgb());
+                            }
+                        }
                     }
                 });
     }

@@ -1,6 +1,4 @@
-package com.example.ogan.listofdevelopersinlagosgithub.APIgson;
-
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi;
+package com.example.ogan.listofdevelopersinlagosgithub.network;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

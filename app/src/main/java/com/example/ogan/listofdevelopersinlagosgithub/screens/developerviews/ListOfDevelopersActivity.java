@@ -2,28 +2,28 @@ package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult;
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GithubApi;
+import com.example.ogan.listofdevelopersinlagosgithub.network.ApiResult;
+import com.example.ogan.listofdevelopersinlagosgithub.network.FetchGithubUserListUseCase;
+import com.example.ogan.listofdevelopersinlagosgithub.network.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseActivity;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListOfDevelopersActivity extends BaseActivity implements ListOfDevelopersViewMvc.Listener {
+public class ListOfDevelopersActivity extends BaseActivity implements ListOfDevelopersViewMvc.Listener,
+        FetchGithubUserListUseCase.Listener {
 
     private static final int PAGE_START = 1;
-    private GithubApi mGithubApi;
+    private FetchGithubUserListUseCase mFetchGithubUserListUseCase;
+
+    private boolean mFirstCall = true;
 
 
     private boolean isLoading = false;
@@ -41,7 +41,8 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
         mListOfDevelopersViewMvc.registerListener(this);
         setContentView(mListOfDevelopersViewMvc.getRootView());
 
-        mGithubApi = getCompositionRoot().getGithubApi();
+        mFetchGithubUserListUseCase = getCompositionRoot().getFetchGithubUserListUseCase();
+        mFetchGithubUserListUseCase.registerListener(this);
 
         loadData();
     }
@@ -49,95 +50,14 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
     private void loadData() {
 
         //performing network call with retrofit
-        mGithubApi.getGithubUser(currentPage).enqueue(new Callback<ApiResult>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
+        mFetchGithubUserListUseCase.loadDataAndNotify(currentPage);
 
-                mListOfDevelopersViewMvc.hideProgressBar();
-
-                if (response.isSuccessful()) {
-
-
-                    //Getting last page from the header
-                    String k = response.headers().get("Link");
-                    String[] l = k != null ? k.split(",") : new String[0];
-                    String[] m = l[1].split(";");
-                    String[] n = m[0].split("page=");
-                    String[] o = n[1].split(">");
-                    TOTAL_PAGES = Integer.parseInt(o[0]);
-
-                    //getting result and adding it to adapter
-                    ApiResult apiResult = response.body();
-                    if (apiResult != null) {
-                        ArrayList<Item> data = apiResult.getItems();
-                        mListOfDevelopersViewMvc.bindData(data);
-
-
-                        //implementing the pagination to load more results
-                        if (currentPage <= TOTAL_PAGES) mListOfDevelopersViewMvc.showLoadingFooter();
-                        else isLastPage = true;
-                    }
-
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Response message: " + response.message() + " with code: " + response.code(),
-                            Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiResult> call, @NonNull Throwable t) {
-
-                mListOfDevelopersViewMvc.hideProgressBar();
-                Toast.makeText(getApplicationContext(), "An error occurred while trying to get data. Please check network connection and try again. ", Toast.LENGTH_SHORT).show();
-
-                System.out.println("t" + t.getMessage());
-
-            }
-        });
     }
 
     //to load the next page of results from the API
     private void loadNextPage() {
-
-        mGithubApi.getGithubUser(currentPage).enqueue(new Callback<ApiResult>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiResult> call, @NonNull Response<ApiResult> response) {
-
-                if (response.isSuccessful()) {
-                    mListOfDevelopersViewMvc.removeLoadingFooter();
-                    isLoading = false;
-
-                    ApiResult apiResult = response.body();
-
-                    if (apiResult != null) {
-                        ArrayList<Item> data = apiResult.getItems();
-
-                        mListOfDevelopersViewMvc.bindData(data);
-
-                        if (currentPage != TOTAL_PAGES) mListOfDevelopersViewMvc.showLoadingFooter();
-                        else isLastPage = true;
-                    }
-                } else {
-
-                    Toast.makeText(getApplicationContext(),
-                            "Response message: " + response.message() + " with code: " + response.code(),
-                            Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiResult> call, @NonNull Throwable t) {
-
-                Toast.makeText(getApplicationContext(), "An error occurred while trying to get data. Please check network connection and try again. ", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
+        mFirstCall = false;
+        mFetchGithubUserListUseCase.loadDataAndNotify(currentPage);
     }
 
     @Override
@@ -207,5 +127,56 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
     protected void onDestroy() {
         super.onDestroy();
         mListOfDevelopersViewMvc.unregisterListener(this);
+    }
+
+    @Override
+    public void onGithubUserListFetched(String header, ApiResult apiResult) {
+        mListOfDevelopersViewMvc.hideProgressBar();
+
+        if (mFirstCall){
+            String[] l = header != null ? header.split(",") : new String[0];
+            String[] m = l[1].split(";");
+            String[] n = m[0].split("page=");
+            String[] o = n[1].split(">");
+            TOTAL_PAGES = Integer.parseInt(o[0]);
+
+            if (apiResult != null) {
+                ArrayList<Item> data = apiResult.getItems();
+                mListOfDevelopersViewMvc.bindData(data);
+
+                //implementing the pagination to load more results
+                if (currentPage <= TOTAL_PAGES) mListOfDevelopersViewMvc.showLoadingFooter();
+                else isLastPage = true;
+            }
+        } else {
+            mListOfDevelopersViewMvc.removeLoadingFooter();
+            isLoading = false;
+
+            if (apiResult != null) {
+                ArrayList<Item> data = apiResult.getItems();
+
+                mListOfDevelopersViewMvc.bindData(data);
+
+                if (currentPage != TOTAL_PAGES) mListOfDevelopersViewMvc.showLoadingFooter();
+                else isLastPage = true;
+            }
+        }
+    }
+
+    @Override
+    public void onRequestFailed(Response<ApiResult> response) {
+        Toast.makeText(getApplicationContext(),
+                "Response message: " + response.message() + " with code: " + response.code(),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNetworkRequestFailed(Throwable t) {
+        mListOfDevelopersViewMvc.hideProgressBar();
+        Toast.makeText(getApplicationContext(),
+                "An error occurred while trying to get data. Please check network connection and try again. ",
+                Toast.LENGTH_SHORT).show();
+
+        System.out.println("t" + t.getMessage());
     }
 }

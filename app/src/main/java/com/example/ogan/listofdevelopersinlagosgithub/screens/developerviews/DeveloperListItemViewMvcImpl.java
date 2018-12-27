@@ -1,12 +1,11 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.network.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservableViewMvc;
 import com.squareup.picasso.Picasso;

@@ -1,25 +1,19 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GithubApi;
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi;
-import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
+import com.example.ogan.listofdevelopersinlagosgithub.network.FetchUserDataUseCase;
+import com.example.ogan.listofdevelopersinlagosgithub.network.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseActivity;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class DeveloperDetailsActivity extends BaseActivity implements DeveloperDetailViewMvc.Listener {
+public class DeveloperDetailsActivity extends BaseActivity implements DeveloperDetailViewMvc.Listener, FetchUserDataUseCase.Listener {
 
     private DeveloperDetailViewMvc mDeveloperDetailViewMvc;
     private String mUppercaseUsername;
@@ -33,7 +27,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
 
     public static final String AVATAR_KEY =
             "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.AVATAR";
-    private GithubApi mGithubApi;
+    private FetchUserDataUseCase mFetchUserDataUseCase;
 
 
     @Override
@@ -59,17 +53,18 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mGithubApi = getCompositionRoot().getGithubApi();
+        mFetchUserDataUseCase = getCompositionRoot().getFetchUserDataUseCase();
+        mFetchUserDataUseCase.registerListener(this);
 
         //making network call with retrofit
         loadData(username);
 
         //to load image into imageView
-        mDeveloperDetailViewMvc.setProfileImage(avatar);
+        mFetchUserDataUseCase.loadImageAndNotify(this, avatar);
 
 
         //this is for getting palette from avatar so as to customise view
-        mDeveloperDetailViewMvc.customiseView(avatar, getWindow());
+        //mDeveloperDetailViewMvc.customiseView(avatar, getWindow());
     }
 
     @Override
@@ -84,37 +79,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
     }
 
     private void loadData(String username) {
-
-        mGithubApi.getUserData(username).enqueue(new Callback<UserApi>() {
-            @Override
-            public void onResponse(@NonNull Call<UserApi> call, @NonNull Response<UserApi> response) {
-
-                mDeveloperDetailViewMvc.hideProgressBar();
-
-                UserApi userResult = response.body();
-
-                if (userResult != null) {
-                    mDeveloperDetailViewMvc.displayData(userResult, mUserUrl);
-                    mDeveloperDetailViewMvc.showCardView();
-
-                } else {
-
-                    mDeveloperDetailViewMvc.hideProgressBar();
-                    Toast.makeText(getApplicationContext(), "Error loading data", Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<UserApi> call, @NonNull Throwable t) {
-
-                mDeveloperDetailViewMvc.hideProgressBar();
-                Toast.makeText(getApplicationContext(), "An error occurred while trying to get data. Please check network connection and try again.", Toast.LENGTH_SHORT).show();
-
-
-            }
-        });
+        mFetchUserDataUseCase.fetchUserDataAndNotify(username);
     }
 
     @Override
@@ -129,6 +94,39 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mFetchUserDataUseCase.unregisterListener(this);
         mDeveloperDetailViewMvc.unregisterListener(this);
+    }
+
+    @Override
+    public void onUserFetched(UserApi userApi) {
+        mDeveloperDetailViewMvc.hideProgressBar();
+        mDeveloperDetailViewMvc.displayData(userApi);
+        mDeveloperDetailViewMvc.showCardView();
+    }
+
+    @Override
+    public void onUserFetchFailed() {
+        mDeveloperDetailViewMvc.hideProgressBar();
+        Toast.makeText(getApplicationContext(), "Error loading data", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestFailed() {
+        mDeveloperDetailViewMvc.hideProgressBar();
+        Toast.makeText(getApplicationContext(),
+                "An error occurred while trying to get data. Please check network connection and try again.",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onImageLoaded(Bitmap bitmap) {
+        mDeveloperDetailViewMvc.setProfileImage(bitmap);
+        mDeveloperDetailViewMvc.customiseView(bitmap, getWindow());
+    }
+
+    @Override
+    public void onImageLoadingFail(Drawable errorDrawable) {
+        mDeveloperDetailViewMvc.setProfileImage(errorDrawable);
     }
 }

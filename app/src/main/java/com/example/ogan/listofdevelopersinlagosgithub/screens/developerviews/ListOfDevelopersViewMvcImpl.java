@@ -1,6 +1,5 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.network.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservableViewMvc;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvcFactory;

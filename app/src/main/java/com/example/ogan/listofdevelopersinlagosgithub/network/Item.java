@@ -1,5 +1,5 @@
 
-package com.example.ogan.listofdevelopersinlagosgithub.APIgson;
+package com.example.ogan.listofdevelopersinlagosgithub.network;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

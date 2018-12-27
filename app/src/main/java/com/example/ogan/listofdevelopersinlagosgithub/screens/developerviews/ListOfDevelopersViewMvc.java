@@ -1,6 +1,6 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.network.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ObservableViewMvc;
 
 import java.util.ArrayList;

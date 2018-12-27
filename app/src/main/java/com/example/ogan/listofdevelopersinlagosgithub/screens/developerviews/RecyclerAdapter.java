@@ -3,10 +3,9 @@ package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.network.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvc;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvcFactory;
 

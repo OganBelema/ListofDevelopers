@@ -1,6 +1,6 @@
 package com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection;
 
-import com.example.ogan.listofdevelopersinlagosgithub.APIgson.GithubApi;
+import com.example.ogan.listofdevelopersinlagosgithub.network.GithubApi;
 import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
 
 import retrofit2.Retrofit;

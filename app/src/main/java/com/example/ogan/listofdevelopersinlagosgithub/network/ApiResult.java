@@ -1,5 +1,5 @@
 
-package com.example.ogan.listofdevelopersinlagosgithub.APIgson;
+package com.example.ogan.listofdevelopersinlagosgithub.network;
 
 import java.util.ArrayList;
 
