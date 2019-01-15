@@ -1,5 +1,8 @@
 package com.example.ogan.listofdevelopersinlagosgithub.network;
 
+import com.example.ogan.listofdevelopersinlagosgithub.network.items.ApiResult;
+import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

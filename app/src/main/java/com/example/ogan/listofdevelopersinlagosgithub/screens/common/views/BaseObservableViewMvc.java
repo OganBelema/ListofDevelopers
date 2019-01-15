@@ -1,4 +1,4 @@
-package com.example.ogan.listofdevelopersinlagosgithub.screens.common;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.common.views;
 
 import java.util.Collections;
 import java.util.HashSet;

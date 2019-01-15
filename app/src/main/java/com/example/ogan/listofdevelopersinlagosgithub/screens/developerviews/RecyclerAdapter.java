@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.Item;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvc;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvcFactory;
+import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvc;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvcFactory;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,8 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.UserApi;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ObservableViewMvc;
+import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ObservableViewMvc;
 
 /**
  * Created by Belema Ogan on 12/22/2018.

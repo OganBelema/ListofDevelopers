@@ -3,15 +3,14 @@ package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.ogan.listofdevelopersinlagosgithub.network.FetchUserDataUseCase;
-import com.example.ogan.listofdevelopersinlagosgithub.network.UserApi;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseActivity;
+import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers.BaseActivity;
 
 public class DeveloperDetailsActivity extends BaseActivity implements DeveloperDetailViewMvc.Listener, FetchUserDataUseCase.Listener {
 
@@ -34,7 +33,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDeveloperDetailViewMvc = getCompositionRoot().getViewMvcFactory().getDeveloperDetailViewMvc(null);
+        mDeveloperDetailViewMvc = getPresentationComponent().getViewMvcFactory().getDeveloperDetailViewMvc(null);
         mDeveloperDetailViewMvc.registerListener(this);
 
         setContentView(mDeveloperDetailViewMvc.getRootView());
@@ -53,7 +52,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mFetchUserDataUseCase = getCompositionRoot().getFetchUserDataUseCase();
+        mFetchUserDataUseCase = getPresentationComponent().getFetchUserDataUseCase();
         mFetchUserDataUseCase.registerListener(this);
 
         //making network call with retrofit
@@ -72,7 +71,8 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
 
         switch (item.getItemId()){
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);

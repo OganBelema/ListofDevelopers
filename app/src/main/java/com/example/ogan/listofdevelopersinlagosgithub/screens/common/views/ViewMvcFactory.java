@@ -1,9 +1,10 @@
-package com.example.ogan.listofdevelopersinlagosgithub.screens.common;
+package com.example.ogan.listofdevelopersinlagosgithub.screens.common.views;
 
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvc;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.DeveloperDetailViewMvc;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.DeveloperDetailViewMvcImpl;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.DeveloperListItemViewMvc;

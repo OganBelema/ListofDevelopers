@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservableViewMvc;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvcFactory;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.BaseObservableViewMvc;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvcFactory;
 
 import java.util.ArrayList;
 

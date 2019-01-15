@@ -16,11 +16,9 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservableViewMvc;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.BaseObservableViewMvc;
 
 
 import de.hdodenhof.circleimageview.CircleImageView;

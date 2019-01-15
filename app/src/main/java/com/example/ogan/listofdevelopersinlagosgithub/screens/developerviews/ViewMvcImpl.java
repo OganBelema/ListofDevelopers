@@ -4,8 +4,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.ogan.listofdevelopersinlagosgithub.R;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseViewMvc;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.ViewMvc;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.BaseViewMvc;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvc;
 
 /**
  * Created by Belema Ogan on 12/23/2018.

@@ -1,108 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="EntryPointsManager">
-    <entry_points version="2.0">
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult java.lang.Integer getTotalCount()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult void setTotalCount(java.lang.Integer totalCount)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult java.lang.Boolean getIncompleteResults()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult void setIncompleteResults(java.lang.Boolean incompleteResults)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.ApiResult void setItems(java.util.ArrayList&lt;com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item&gt; items)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setLogin(java.lang.String login)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.Integer getId()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setId(java.lang.Integer id)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setAvatarUrl(java.lang.String avatarUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getGravatarId()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setGravatarId(java.lang.String gravatarId)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setUrl(java.lang.String url)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setHtmlUrl(java.lang.String htmlUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getFollowersUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setFollowersUrl(java.lang.String followersUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getFollowingUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setFollowingUrl(java.lang.String followingUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getGistsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setGistsUrl(java.lang.String gistsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getStarredUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setStarredUrl(java.lang.String starredUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getSubscriptionsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setSubscriptionsUrl(java.lang.String subscriptionsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getOrganizationsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setOrganizationsUrl(java.lang.String organizationsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getReposUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setReposUrl(java.lang.String reposUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getEventsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setEventsUrl(java.lang.String eventsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getReceivedEventsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setReceivedEventsUrl(java.lang.String receivedEventsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.String getType()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setType(java.lang.String type)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.Boolean getSiteAdmin()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setSiteAdmin(java.lang.Boolean siteAdmin)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item java.lang.Double getScore()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.Item void setScore(java.lang.Double score)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.RecyclerAdapter void clear()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.RecyclerAdapter boolean isEmpty()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setUpdatedAt(java.lang.String updatedAt)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getUpdatedAt()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setCreatedAt(java.lang.String createdAt)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getCreatedAt()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setFollowing(java.lang.Integer following)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.Integer getFollowing()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setFollowers(java.lang.Integer followers)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.Integer getFollowers()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setPublicGists(java.lang.Integer publicGists)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.Integer getPublicGists()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setPublicRepos(java.lang.Integer publicRepos)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setBio(java.lang.String bio)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getBio()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setHireable(java.lang.Object hireable)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.Object getHireable()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setEmail(java.lang.Object email)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.Object getEmail()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setLocation(java.lang.String location)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getLocation()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setBlog(java.lang.String blog)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getBlog()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setCompany(java.lang.Object company)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.Object getCompany()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setName(java.lang.String name)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setSiteAdmin(java.lang.Boolean siteAdmin)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.Boolean getSiteAdmin()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setType(java.lang.String type)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getType()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setReceivedEventsUrl(java.lang.String receivedEventsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getReceivedEventsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setEventsUrl(java.lang.String eventsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getEventsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setReposUrl(java.lang.String reposUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getReposUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setOrganizationsUrl(java.lang.String organizationsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getOrganizationsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setSubscriptionsUrl(java.lang.String subscriptionsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getSubscriptionsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setStarredUrl(java.lang.String starredUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getStarredUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setGistsUrl(java.lang.String gistsUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getGistsUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setFollowingUrl(java.lang.String followingUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getFollowingUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setFollowersUrl(java.lang.String followersUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getFollowersUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setHtmlUrl(java.lang.String htmlUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getHtmlUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setUrl(java.lang.String url)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setGravatarId(java.lang.String gravatarId)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getGravatarId()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setAvatarUrl(java.lang.String avatarUrl)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getAvatarUrl()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setId(java.lang.Integer id)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.Integer getId()" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi void setLogin(java.lang.String login)" />
-      <entry_point TYPE="method" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi java.lang.String getLogin()" />
-      <entry_point TYPE="implicit.constructor" FQNAME="com.example.ogan.listofdevelopersinlagosgithub.APIgson.UserGson.UserApi" />
-    </entry_points>
-  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
@@ -127,26 +24,10 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

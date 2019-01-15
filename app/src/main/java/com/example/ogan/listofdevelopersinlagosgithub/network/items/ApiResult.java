@@ -1,8 +1,9 @@
 
-package com.example.ogan.listofdevelopersinlagosgithub.network;
+package com.example.ogan.listofdevelopersinlagosgithub.network.items;
 
 import java.util.ArrayList;
 
+import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

@@ -1,13 +1,9 @@
 package com.example.ogan.listofdevelopersinlagosgithub.network;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
+import com.example.ogan.listofdevelopersinlagosgithub.network.items.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservable;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import retrofit2.Call;
 import retrofit2.Callback;

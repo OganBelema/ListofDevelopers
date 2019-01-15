@@ -7,11 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.ApiResult;
+import com.example.ogan.listofdevelopersinlagosgithub.network.items.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.network.FetchGithubUserListUseCase;
-import com.example.ogan.listofdevelopersinlagosgithub.network.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseActivity;
+import com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -37,14 +37,13 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mListOfDevelopersViewMvc = getCompositionRoot().getViewMvcFactory().getListOfDevelopersViewMvc(null);
+        mListOfDevelopersViewMvc = getPresentationComponent().getViewMvcFactory().getListOfDevelopersViewMvc(null);
         mListOfDevelopersViewMvc.registerListener(this);
-        setContentView(mListOfDevelopersViewMvc.getRootView());
-
-        mFetchGithubUserListUseCase = getCompositionRoot().getFetchGithubUserListUseCase();
+        mFetchGithubUserListUseCase = getPresentationComponent().getFetchGithubUserListUseCase();
         mFetchGithubUserListUseCase.registerListener(this);
 
         loadData();
+        setContentView(mListOfDevelopersViewMvc.getRootView());
     }
 
     private void loadData() {
