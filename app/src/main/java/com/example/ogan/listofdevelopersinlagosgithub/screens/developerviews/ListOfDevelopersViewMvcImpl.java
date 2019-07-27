@@ -33,7 +33,7 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
     private RecyclerAdapter mRecyclerAdapter;
     private final PaginationScrollListener mPaginationScrollListener;
 
-    public ListOfDevelopersViewMvcImpl(LayoutInflater inflater, ViewGroup parent, ViewMvcFactory viewMvcFactory) {
+    public ListOfDevelopersViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
 
         setRootView(inflater.inflate(R.layout.list_of_developers_activity, parent, false));
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
