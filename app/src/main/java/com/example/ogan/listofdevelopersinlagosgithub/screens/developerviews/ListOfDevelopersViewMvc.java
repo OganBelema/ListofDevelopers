@@ -1,6 +1,6 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ObservableViewMvc;
 
 import java.util.ArrayList;
@@ -30,6 +30,10 @@ public interface ListOfDevelopersViewMvc extends ObservableViewMvc<ListOfDevelop
     void hideProgressBar();
 
     void bindData(ArrayList<Item> data);
+
+    void setAdapter(RecyclerAdapter adapter);
+
+    void clearData();
 
     void showLoadingFooter();
 

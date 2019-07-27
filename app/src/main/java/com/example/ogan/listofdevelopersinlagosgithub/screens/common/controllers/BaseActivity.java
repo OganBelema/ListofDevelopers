@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.ogan.listofdevelopersinlagosgithub.common.CustomApplication;
 import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.application.ApplicationComponent;
-import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.presentation.NetworkModule;
+import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.application.NetworkModule;
 import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.presentation.PresentationComponent;
 import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.presentation.PresentationModule;
 
@@ -20,8 +20,7 @@ public class BaseActivity extends AppCompatActivity {
 
         if (mPresentationComponent == null){
             return mPresentationComponent = getApplicationComponent()
-                    .newPresentationComponent(new PresentationModule(this),
-                            new NetworkModule());
+                    .newPresentationComponent(new PresentationModule(this));
         }
 
         return mPresentationComponent;

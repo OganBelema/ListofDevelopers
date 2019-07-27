@@ -1,6 +1,6 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ObservableViewMvc;
 
 /**

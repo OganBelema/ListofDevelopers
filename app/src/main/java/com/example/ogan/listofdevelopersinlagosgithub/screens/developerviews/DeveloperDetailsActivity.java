@@ -1,16 +1,25 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.NavUtils;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.ogan.listofdevelopersinlagosgithub.common.CustomApplication;
+import com.example.ogan.listofdevelopersinlagosgithub.common.NetworkUtil;
+import com.example.ogan.listofdevelopersinlagosgithub.database.DeveloperDatabase;
+import com.example.ogan.listofdevelopersinlagosgithub.database.InsertUserService;
 import com.example.ogan.listofdevelopersinlagosgithub.network.FetchUserDataUseCase;
-import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers.BaseActivity;
+
+import io.reactivex.Completable;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 
 public class DeveloperDetailsActivity extends BaseActivity implements DeveloperDetailViewMvc.Listener, FetchUserDataUseCase.Listener {
 
@@ -28,6 +37,11 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
             "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.AVATAR";
     private FetchUserDataUseCase mFetchUserDataUseCase;
 
+    private NetworkUtil mNetworkUtil;
+
+    private DeveloperDatabase mDeveloperDatabase;
+    private String mAvatar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +57,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
         String username = intent.getStringExtra(USERNAME_KEY);
         mUppercaseUsername = username.substring(0, 1).toUpperCase() + username.substring(1);
         mUserUrl = intent.getStringExtra(URL_KEY);
-        String avatar = intent.getStringExtra(AVATAR_KEY);
+        mAvatar = intent.getStringExtra(AVATAR_KEY);
 
         //setting toolbar title and back button
         mDeveloperDetailViewMvc.setToolbarTitle(mUppercaseUsername);
@@ -52,15 +66,14 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mFetchUserDataUseCase = getPresentationComponent().getFetchUserDataUseCase();
+        mFetchUserDataUseCase = ((CustomApplication) getApplicationContext()).getApplicationComponent().getFetchUserDataUseCase();
         mFetchUserDataUseCase.registerListener(this);
 
-        //making network call with retrofit
+        mNetworkUtil = ((CustomApplication) getApplicationContext()).getApplicationComponent().getNetworkUtil();
+
+        mDeveloperDatabase = ((CustomApplication) getApplicationContext()).getApplicationComponent().getDeveloperDatabase();
+
         loadData(username);
-
-        //to load image into imageView
-        mFetchUserDataUseCase.loadImageAndNotify(this, avatar);
-
 
         //this is for getting palette from avatar so as to customise view
         //mDeveloperDetailViewMvc.customiseView(avatar, getWindow());
@@ -79,7 +92,27 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
     }
 
     private void loadData(String username) {
-        mFetchUserDataUseCase.fetchUserDataAndNotify(username);
+        if (mNetworkUtil.isConnected()){
+            //making network call with retrofit
+            mFetchUserDataUseCase.fetchUserDataAndNotify(username);
+
+            //to load image into imageView
+            mFetchUserDataUseCase.loadImageAndNotify(this, mAvatar);
+        } else {
+            mDeveloperDatabase.getUserDao().getUser(username).observe(this, new Observer<UserApi>() {
+                @Override
+                public void onChanged(@Nullable UserApi userApi) {
+                    mDeveloperDetailViewMvc.hideProgressBar();
+
+                    if (userApi != null){
+                        mDeveloperDetailViewMvc.displayData(userApi);
+                        mDeveloperDetailViewMvc.showCardView();
+                    } else {
+                        //TODO display no data text
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -101,8 +134,15 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
     @Override
     public void onUserFetched(UserApi userApi) {
         mDeveloperDetailViewMvc.hideProgressBar();
+        cacheData(userApi);
         mDeveloperDetailViewMvc.displayData(userApi);
         mDeveloperDetailViewMvc.showCardView();
+    }
+
+    private void cacheData(final UserApi userApi) {
+        Intent startInsertResultService = new Intent(this, InsertUserService.class);
+        startInsertResultService.putExtra(InsertUserService.USER_KEY, userApi);
+        startService(startInsertResultService);
     }
 
     @Override

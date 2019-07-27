@@ -16,7 +16,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.BaseObservableViewMvc;
 

@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservable;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;

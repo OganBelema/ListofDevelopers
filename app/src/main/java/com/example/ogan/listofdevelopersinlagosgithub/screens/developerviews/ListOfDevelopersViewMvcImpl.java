@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.BaseObservableViewMvc;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvcFactory;
 
 import java.util.ArrayList;
+
+import io.reactivex.annotations.Nullable;
 
 /**
  * Created by Belema Ogan on 12/21/2018.
@@ -26,7 +28,9 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
     private final RecyclerView mRecyclerView;
     private final ProgressBar mProgressBar;
     private final SwipeRefreshLayout mSwipeRefreshLayout;
-    private final RecyclerAdapter mRecyclerAdapter;
+
+    @Nullable
+    private RecyclerAdapter mRecyclerAdapter;
     private final PaginationScrollListener mPaginationScrollListener;
 
     public ListOfDevelopersViewMvcImpl(LayoutInflater inflater, ViewGroup parent, ViewMvcFactory viewMvcFactory) {
@@ -36,8 +40,6 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
         mProgressBar = (ProgressBar) findViewById(R.id.loading_spinner);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
 
-        mRecyclerAdapter = new RecyclerAdapter(getContext(), viewMvcFactory);
-
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         mRecyclerView.setHasFixedSize(true);
@@ -46,7 +48,6 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
-        mRecyclerView.setAdapter(mRecyclerAdapter);
 
         mPaginationScrollListener = new PaginationScrollListener(linearLayoutManager) {
             @Override
@@ -92,7 +93,12 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
 
         mRecyclerView.addOnScrollListener(mPaginationScrollListener);
 
+    }
 
+    @Override
+    public void setAdapter(RecyclerAdapter recyclerAdapter) {
+        mRecyclerAdapter = recyclerAdapter;
+        mRecyclerView.setAdapter(mRecyclerAdapter);
     }
 
     @Override
@@ -115,16 +121,29 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
 
     @Override
     public void bindData(ArrayList<Item> data) {
-        mRecyclerAdapter.addAll(data);
+        if (mRecyclerAdapter != null){
+            mRecyclerAdapter.addAll(data);
+        }
+    }
+
+    @Override
+    public void clearData() {
+        if (mRecyclerAdapter != null){
+            mRecyclerAdapter.clear();
+        }
     }
 
     @Override
     public void showLoadingFooter() {
-        mRecyclerAdapter.addLoadingFooter();
+        if (mRecyclerAdapter != null){
+            mRecyclerAdapter.addLoadingFooter();
+        }
     }
 
     @Override
     public void removeLoadingFooter() {
-        mRecyclerAdapter.removeLoadingFooter();
+        if (mRecyclerAdapter != null){
+            mRecyclerAdapter.removeLoadingFooter();
+        }
     }
 }

@@ -1,37 +1,27 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import android.content.Intent;
-import android.os.Handler;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.items.ApiResult;
-import com.example.ogan.listofdevelopersinlagosgithub.network.FetchGithubUserListUseCase;
-import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.model.items.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers.BaseActivity;
-
-import java.util.ArrayList;
+import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.ListOfDevelopersViewModel;
+import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.ListOfDevelopersViewModelFactory;
 
 import retrofit2.Response;
 
-public class ListOfDevelopersActivity extends BaseActivity implements ListOfDevelopersViewMvc.Listener,
-        FetchGithubUserListUseCase.Listener {
 
-    private static final int PAGE_START = 1;
-    private FetchGithubUserListUseCase mFetchGithubUserListUseCase;
-
-    private boolean mFirstCall = true;
-
-
-    private boolean isLoading = false;
-    private boolean isLastPage = false;
-    private int TOTAL_PAGES = 1;
-    private int currentPage = PAGE_START;
+public class ListOfDevelopersActivity extends BaseActivity implements ListOfDevelopersViewMvc.Listener {
 
     private ListOfDevelopersViewMvc mListOfDevelopersViewMvc;
+
+    private ListOfDevelopersViewModel mListOfDevelopersViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +29,65 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
 
         mListOfDevelopersViewMvc = getPresentationComponent().getViewMvcFactory().getListOfDevelopersViewMvc(null);
         mListOfDevelopersViewMvc.registerListener(this);
-        mFetchGithubUserListUseCase = getPresentationComponent().getFetchGithubUserListUseCase();
-        mFetchGithubUserListUseCase.registerListener(this);
 
-        loadData();
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, getPresentationComponent().getViewMvcFactory());
+
+        ListOfDevelopersViewModelFactory mListOfDevelopersViewModelFactory = new ListOfDevelopersViewModelFactory(this, recyclerAdapter);
+
+        mListOfDevelopersViewModel = ViewModelProviders.of(this, mListOfDevelopersViewModelFactory).get(ListOfDevelopersViewModel.class);
+
+        mListOfDevelopersViewMvc.setAdapter(mListOfDevelopersViewModel.getRecyclerAdapter());
+
         setContentView(mListOfDevelopersViewMvc.getRootView());
-    }
 
-    private void loadData() {
+        mListOfDevelopersViewModel.getErrorLiveData().observe(this, new Observer<Throwable>() {
+            @Override
+            public void onChanged(@Nullable Throwable throwable) {
+                if (throwable != null){
+                    mListOfDevelopersViewMvc.hideProgressBar();
+                    Toast.makeText(getApplicationContext(),
+                            "An error occurred while trying to get data. Please check network connection and try again. ",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        //performing network call with retrofit
-        mFetchGithubUserListUseCase.loadDataAndNotify(currentPage);
+        mListOfDevelopersViewModel.getResponseLiveData().observe(this, new Observer<Response<ApiResult>>() {
+            @Override
+            public void onChanged(@Nullable Response<ApiResult> apiResultResponse) {
+                if (apiResultResponse != null){
+                    Toast.makeText(getApplicationContext(),
+                            "Response message: " + apiResultResponse.message() + " with code: " + apiResultResponse.code(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-    }
+        mListOfDevelopersViewModel.getApiResultLiveData().observe(this, new Observer<ApiResult>() {
+            @Override
+            public void onChanged(@Nullable ApiResult result) {
+                mListOfDevelopersViewMvc.hideProgressBar();
 
-    //to load the next page of results from the API
-    private void loadNextPage() {
-        mFirstCall = false;
-        mFetchGithubUserListUseCase.loadDataAndNotify(currentPage);
+                if (result != null){
+                    mListOfDevelopersViewMvc.bindData(result.getItems());
+                } else {
+                    Toast.makeText(ListOfDevelopersActivity.this, "No data", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        mListOfDevelopersViewModel.getDisplayLoadingFooter().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean display) {
+                if (display != null){
+                    if (display){
+                        mListOfDevelopersViewMvc.showLoadingFooter();
+                    } else {
+                        mListOfDevelopersViewMvc.removeLoadingFooter();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -74,36 +105,26 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.refresh_menu) {
-            Intent intent = new Intent(getApplicationContext(), ListOfDevelopersActivity.class);
-            startActivity(intent);
+            refreshItems();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void refreshItems() {
-        Intent intent = new Intent(getApplicationContext(), ListOfDevelopersActivity.class);
-        startActivity(intent);
+        mListOfDevelopersViewMvc.clearData();
+        mListOfDevelopersViewModel.refresh();
     }
 
 
     @Override
     public void loadMoreItems() {
-        isLoading = true;
-        currentPage += 1;
-
-        // mocking network delay for API call
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadNextPage();
-            }
-        }, 1000);
+        mListOfDevelopersViewModel.loadMoreItems();
     }
 
     @Override
     public boolean isLoading() {
-        return isLoading;
+        return mListOfDevelopersViewModel.getIsLoading();
     }
 
     @Override
@@ -114,12 +135,12 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
 
     @Override
     public int getTotalPageCount() {
-        return TOTAL_PAGES;
+        return mListOfDevelopersViewModel.getTotalPages();
     }
 
     @Override
     public boolean isLastPage() {
-        return isLastPage;
+        return mListOfDevelopersViewModel.getIsLastPages();
     }
 
     @Override
@@ -128,54 +149,4 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
         mListOfDevelopersViewMvc.unregisterListener(this);
     }
 
-    @Override
-    public void onGithubUserListFetched(String header, ApiResult apiResult) {
-        mListOfDevelopersViewMvc.hideProgressBar();
-
-        if (mFirstCall){
-            String[] l = header != null ? header.split(",") : new String[0];
-            String[] m = l[1].split(";");
-            String[] n = m[0].split("page=");
-            String[] o = n[1].split(">");
-            TOTAL_PAGES = Integer.parseInt(o[0]);
-
-            if (apiResult != null) {
-                ArrayList<Item> data = apiResult.getItems();
-                mListOfDevelopersViewMvc.bindData(data);
-
-                //implementing the pagination to load more results
-                if (currentPage <= TOTAL_PAGES) mListOfDevelopersViewMvc.showLoadingFooter();
-                else isLastPage = true;
-            }
-        } else {
-            mListOfDevelopersViewMvc.removeLoadingFooter();
-            isLoading = false;
-
-            if (apiResult != null) {
-                ArrayList<Item> data = apiResult.getItems();
-
-                mListOfDevelopersViewMvc.bindData(data);
-
-                if (currentPage != TOTAL_PAGES) mListOfDevelopersViewMvc.showLoadingFooter();
-                else isLastPage = true;
-            }
-        }
-    }
-
-    @Override
-    public void onRequestFailed(Response<ApiResult> response) {
-        Toast.makeText(getApplicationContext(),
-                "Response message: " + response.message() + " with code: " + response.code(),
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNetworkRequestFailed(Throwable t) {
-        mListOfDevelopersViewMvc.hideProgressBar();
-        Toast.makeText(getApplicationContext(),
-                "An error occurred while trying to get data. Please check network connection and try again. ",
-                Toast.LENGTH_SHORT).show();
-
-        System.out.println("t" + t.getMessage());
-    }
 }
