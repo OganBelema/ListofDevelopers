@@ -7,6 +7,8 @@ import com.example.ogan.listofdevelopersinlagosgithub.network.FetchGithubUserLis
 import com.example.ogan.listofdevelopersinlagosgithub.network.FetchUserDataUseCase;
 import com.example.ogan.listofdevelopersinlagosgithub.network.GithubApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvcFactory;
+import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.DeveloperDetailViewModelFactory;
+import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.ListOfDevelopersViewModelFactory;
 
 import dagger.Subcomponent;
 
@@ -20,4 +22,8 @@ public interface PresentationComponent {
     public LayoutInflater getLayoutInflater();
 
     public ViewMvcFactory getViewMvcFactory();
+
+    public ListOfDevelopersViewModelFactory getListOfDevelopersViewModelFactory();
+
+    public DeveloperDetailViewModelFactory getDeveloperDetailViewModelFactory();
 }

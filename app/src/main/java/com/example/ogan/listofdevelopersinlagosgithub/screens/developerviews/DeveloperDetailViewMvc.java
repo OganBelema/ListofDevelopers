@@ -23,7 +23,11 @@ public interface DeveloperDetailViewMvc extends ObservableViewMvc<DeveloperDetai
 
     void showCardView();
 
+    void hideCardView();
+
     void hideProgressBar();
+
+    void showMessage(String message);
 
     void setToolbarTitle(String toolbarTitle);
 

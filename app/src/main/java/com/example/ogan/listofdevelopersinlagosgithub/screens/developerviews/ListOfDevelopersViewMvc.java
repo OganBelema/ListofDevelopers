@@ -25,6 +25,8 @@ public interface ListOfDevelopersViewMvc extends ObservableViewMvc<ListOfDevelop
 
     }
 
+    void showMessage(String message);
+
     void stopRefreshing();
 
     void hideProgressBar();

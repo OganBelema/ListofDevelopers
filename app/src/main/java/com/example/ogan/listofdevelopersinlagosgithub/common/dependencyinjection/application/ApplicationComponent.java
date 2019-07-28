@@ -7,6 +7,7 @@ import com.example.ogan.listofdevelopersinlagosgithub.database.DeveloperDatabase
 import com.example.ogan.listofdevelopersinlagosgithub.network.FetchGithubUserListUseCase;
 import com.example.ogan.listofdevelopersinlagosgithub.network.FetchUserDataUseCase;
 import com.example.ogan.listofdevelopersinlagosgithub.network.GithubApi;
+import com.example.ogan.listofdevelopersinlagosgithub.repository.DeveloperDetailRepository;
 import com.example.ogan.listofdevelopersinlagosgithub.repository.ListOfDeveloperRepository;
 
 import javax.inject.Singleton;
@@ -34,4 +35,6 @@ public interface ApplicationComponent {
     public NetworkUtil getNetworkUtil();
 
     public ListOfDeveloperRepository getListOfDeveloperRepository();
+
+    public DeveloperDetailRepository getDeveloperDetailRepository();
 }

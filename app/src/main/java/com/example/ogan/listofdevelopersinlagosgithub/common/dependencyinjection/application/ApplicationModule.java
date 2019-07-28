@@ -6,7 +6,9 @@ import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.common.NetworkUtil;
 import com.example.ogan.listofdevelopersinlagosgithub.database.DeveloperDatabase;
 import com.example.ogan.listofdevelopersinlagosgithub.network.FetchGithubUserListUseCase;
+import com.example.ogan.listofdevelopersinlagosgithub.network.FetchUserDataUseCase;
 import com.example.ogan.listofdevelopersinlagosgithub.network.GithubApi;
+import com.example.ogan.listofdevelopersinlagosgithub.repository.DeveloperDetailRepository;
 import com.example.ogan.listofdevelopersinlagosgithub.repository.ListOfDeveloperRepository;
 
 import javax.inject.Singleton;
@@ -51,10 +53,16 @@ public class ApplicationModule {
     }
 
     @Provides
-    @Singleton
     ListOfDeveloperRepository getListOfDeveloperRepository(FetchGithubUserListUseCase fetchGithubUserListUseCase,
                                                            NetworkUtil networkUtil,
                                                            DeveloperDatabase developerDatabase){
         return new ListOfDeveloperRepository(context, fetchGithubUserListUseCase, networkUtil, developerDatabase);
+    }
+
+    @Provides
+    DeveloperDetailRepository getDeveloperDetailRepository(FetchUserDataUseCase fetchUserDataUseCase,
+                                                           NetworkUtil networkUtil,
+                                                           DeveloperDatabase developerDatabase){
+        return new DeveloperDetailRepository(context, fetchUserDataUseCase, networkUtil, developerDatabase);
     }
 }

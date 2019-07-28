@@ -7,6 +7,8 @@ import android.arch.persistence.room.Query;
 
 import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 
+import io.reactivex.Single;
+
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 
@@ -17,5 +19,5 @@ public interface UserDao {
     public void insertUser(UserApi user);
 
     @Query("SELECT * FROM users WHERE login = :username")
-    public LiveData<UserApi> getUser(String username);
+    public Single<UserApi> getUser(String username);
 }

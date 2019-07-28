@@ -1,11 +1,8 @@
 package com.example.ogan.listofdevelopersinlagosgithub.viewmodel;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.content.Context;
 
-import com.example.ogan.listofdevelopersinlagosgithub.common.CustomApplication;
 import com.example.ogan.listofdevelopersinlagosgithub.model.items.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.repository.ListOfDeveloperRepository;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.RecyclerAdapter;
@@ -18,21 +15,9 @@ public class ListOfDevelopersViewModel extends ViewModel {
 
     private final ListOfDeveloperRepository mListOfDeveloperRepository;
 
-    private final  MutableLiveData<Throwable> mErrorLiveData;
-
-    private final MutableLiveData<Response<ApiResult>> mResponseLiveData;
-
-    private final MutableLiveData<ApiResult> mApiResultLiveData;
-
-    private final MutableLiveData<Boolean> mDisplayLoadingFooter;
-
-    public ListOfDevelopersViewModel(Context context, RecyclerAdapter recyclerAdapter) {
+    public ListOfDevelopersViewModel(ListOfDeveloperRepository listOfDeveloperRepository, RecyclerAdapter recyclerAdapter) {
         mRecyclerAdapter = recyclerAdapter;
-        mListOfDeveloperRepository = ((CustomApplication) context.getApplicationContext()).getApplicationComponent().getListOfDeveloperRepository();
-        mResponseLiveData = mListOfDeveloperRepository.mResponseLiveData;
-        mErrorLiveData = mListOfDeveloperRepository.mErrorLiveData;
-        mApiResultLiveData = mListOfDeveloperRepository.mApiResultLiveData;
-        mDisplayLoadingFooter = mListOfDeveloperRepository.mDisplayLoadingFooter;
+        mListOfDeveloperRepository = listOfDeveloperRepository;
         mListOfDeveloperRepository.loadData();
     }
 
@@ -53,19 +38,23 @@ public class ListOfDevelopersViewModel extends ViewModel {
     }
 
     public LiveData<Throwable> getErrorLiveData() {
-        return mErrorLiveData;
+        return mListOfDeveloperRepository.getErrorLiveData();
     }
 
     public LiveData<Response<ApiResult>> getResponseLiveData() {
-        return mResponseLiveData;
+        return mListOfDeveloperRepository.getResponseLiveData();
     }
 
     public LiveData<ApiResult> getApiResultLiveData() {
-        return mApiResultLiveData;
+        return mListOfDeveloperRepository.getApiResultLiveData();
     }
 
     public LiveData<Boolean> getDisplayLoadingFooter() {
-        return mDisplayLoadingFooter;
+        return mListOfDeveloperRepository.getDisplayLoadingFooter();
+    }
+
+    public LiveData<Boolean> getNoDat(){
+        return mListOfDeveloperRepository.getNoData();
     }
 
     @Override

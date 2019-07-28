@@ -6,7 +6,7 @@ import android.arch.persistence.room.Query;
 
 import com.example.ogan.listofdevelopersinlagosgithub.model.items.ApiResult;
 
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
@@ -17,6 +17,6 @@ public interface ResultDao {
     public void insertResult(ApiResult result);
 
     @Query("SELECT * FROM result")
-    public Flowable<ApiResult> getResult();
+    public Single<ApiResult> getResult();
 
 }

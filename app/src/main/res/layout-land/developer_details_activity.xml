@@ -32,53 +32,63 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:visibility="gone">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="16dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/user_pic"
+                        android:layout_weight="1"
                         android:layout_width="@dimen/image_size"
                         android:layout_height="@dimen/image_size"
                         android:layout_gravity="center_horizontal"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:layout_weight="2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textColor="@android:color/black"
-                        android:text="@string/no_fullName"
-                        android:drawableLeft="@drawable/ic_person_24dp"
-                        android:drawableStart="@drawable/ic_person_24dp"
-                        android:drawablePadding="8dp"
-                        android:layout_marginTop="16dp"
-                        android:id="@+id/user_name"/>
+                        android:layout_height="match_parent"
+                        android:padding="16dp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_marginTop="16dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textColor="@android:color/black"
-                        android:drawableLeft="@drawable/briefcase"
-                        android:drawableStart="@drawable/briefcase"
-                        android:drawablePadding="8dp"
-                        android:id="@+id/repo_number"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textColor="@android:color/black"
+                            android:text="@string/no_fullName"
+                            android:drawableLeft="@drawable/ic_person_24dp"
+                            android:drawableStart="@drawable/ic_person_24dp"
+                            android:drawablePadding="8dp"
+                            android:layout_marginTop="16dp"
+                            android:id="@+id/user_name"/>
 
-                    <TextView
-                        android:layout_marginTop="16dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autoLink="web"
-                        android:textSize="20sp"
-                        android:drawableLeft="@drawable/ic_web_24dp"
-                        android:drawableStart="@drawable/ic_web_24dp"
-                        android:drawablePadding="8dp"
-                        android:id="@+id/user_url"/>
+                        <TextView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textColor="@android:color/black"
+                            android:drawableLeft="@drawable/briefcase"
+                            android:drawableStart="@drawable/briefcase"
+                            android:drawablePadding="8dp"
+                            android:id="@+id/repo_number"/>
+
+                        <TextView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autoLink="web"
+                            android:textSize="20sp"
+                            android:drawableLeft="@drawable/ic_web_24dp"
+                            android:drawableStart="@drawable/ic_web_24dp"
+                            android:drawablePadding="8dp"
+                            android:id="@+id/user_url"/>
 
 
+                    </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

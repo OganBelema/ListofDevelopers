@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.ogan.listofdevelopersinlagosgithub.model.items.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers.BaseActivity;
 import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.ListOfDevelopersViewModel;
-import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.ListOfDevelopersViewModelFactory;
 
 import retrofit2.Response;
 
@@ -30,11 +28,9 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
         mListOfDevelopersViewMvc = getPresentationComponent().getViewMvcFactory().getListOfDevelopersViewMvc(null);
         mListOfDevelopersViewMvc.registerListener(this);
 
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, getPresentationComponent().getViewMvcFactory());
-
-        ListOfDevelopersViewModelFactory mListOfDevelopersViewModelFactory = new ListOfDevelopersViewModelFactory(this, recyclerAdapter);
-
-        mListOfDevelopersViewModel = ViewModelProviders.of(this, mListOfDevelopersViewModelFactory).get(ListOfDevelopersViewModel.class);
+        mListOfDevelopersViewModel = ViewModelProviders.of(this,
+                getPresentationComponent().getListOfDevelopersViewModelFactory())
+                .get(ListOfDevelopersViewModel.class);
 
         mListOfDevelopersViewMvc.setAdapter(mListOfDevelopersViewModel.getRecyclerAdapter());
 
@@ -45,9 +41,7 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
             public void onChanged(@Nullable Throwable throwable) {
                 if (throwable != null){
                     mListOfDevelopersViewMvc.hideProgressBar();
-                    Toast.makeText(getApplicationContext(),
-                            "An error occurred while trying to get data. Please check network connection and try again. ",
-                            Toast.LENGTH_SHORT).show();
+                    mListOfDevelopersViewMvc.showMessage("An error occurred while trying to get data. Please check network connection and try again. ");
                 }
             }
         });
@@ -56,9 +50,7 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
             @Override
             public void onChanged(@Nullable Response<ApiResult> apiResultResponse) {
                 if (apiResultResponse != null){
-                    Toast.makeText(getApplicationContext(),
-                            "Response message: " + apiResultResponse.message() + " with code: " + apiResultResponse.code(),
-                            Toast.LENGTH_SHORT).show();
+                    mListOfDevelopersViewMvc.showMessage("Response message: " + apiResultResponse.message() + " with code: " + apiResultResponse.code());
                 }
             }
         });
@@ -70,8 +62,17 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
 
                 if (result != null){
                     mListOfDevelopersViewMvc.bindData(result.getItems());
-                } else {
-                    Toast.makeText(ListOfDevelopersActivity.this, "No data", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        mListOfDevelopersViewModel.getNoDat().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean noData) {
+                if (noData != null){
+                    if (noData){
+                        mListOfDevelopersViewMvc.showMessage("No data");
+                    }
                 }
             }
         });
@@ -145,8 +146,8 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         mListOfDevelopersViewMvc.unregisterListener(this);
+        super.onDestroy();
     }
 
 }
