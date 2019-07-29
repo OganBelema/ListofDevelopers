@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "187535476881",
+    "firebase_url": "https://list-of-java-developers.firebaseio.com",
+    "project_id": "list-of-java-developers",
+    "storage_bucket": "list-of-java-developers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187535476881:android:a66c836926db390f",
+        "android_client_info": {
+          "package_name": "com.example.ogan.listofdevelopersinlagosgithub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "187535476881-tl217infl0lrdiqs8182lcrqaa56129d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxWSX3nhP_EF28jxbbZTC0CCBbknNTGcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "187535476881-tl217infl0lrdiqs8182lcrqaa56129d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

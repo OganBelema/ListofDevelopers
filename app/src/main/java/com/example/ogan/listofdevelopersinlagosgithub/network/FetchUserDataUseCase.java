@@ -3,7 +3,8 @@ package com.example.ogan.listofdevelopersinlagosgithub.network;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservable;
@@ -59,15 +60,15 @@ public class FetchUserDataUseCase extends BaseObservable<FetchUserDataUseCase.Li
         });
     }
 
-    public void loadImageAndNotify(Context context, String imageUrl){
-        Picasso.with(context).load(imageUrl).into(new Target() {
+    public void loadImageAndNotify(String imageUrl){
+        Picasso.get().load(imageUrl).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 notifyImageDownloadSuccess(bitmap);
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
                 notifyImageDownloadFailure(errorDrawable);
             }
 

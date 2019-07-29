@@ -1,10 +1,10 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers;
 
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ogan.listofdevelopersinlagosgithub.common.CustomApplication;
 import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.application.ApplicationComponent;
-import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.application.NetworkModule;
 import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.presentation.PresentationComponent;
 import com.example.ogan.listofdevelopersinlagosgithub.common.dependencyinjection.presentation.PresentationModule;
 

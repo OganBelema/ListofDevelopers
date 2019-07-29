@@ -1,7 +1,7 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by ogan on 8/15/17.

@@ -52,7 +52,7 @@ public class DeveloperListItemViewMvcImpl extends
             String uppercaseUsername = username.substring(0, 1).toUpperCase() + username.substring(1);
             mUsernameTextView.setText(uppercaseUsername);
         }
-        Picasso.with(getContext()).load(item.getAvatarUrl()).into(mUserImageView);
+        Picasso.get().load(item.getAvatarUrl()).into(mUserImageView);
     }
 
 }

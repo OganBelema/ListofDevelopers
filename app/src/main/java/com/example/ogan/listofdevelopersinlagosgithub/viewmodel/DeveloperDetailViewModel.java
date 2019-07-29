@@ -1,9 +1,10 @@
 package com.example.ogan.listofdevelopersinlagosgithub.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.repository.DeveloperDetailRepository;

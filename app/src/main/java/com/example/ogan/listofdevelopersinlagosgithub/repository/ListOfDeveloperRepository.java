@@ -1,9 +1,10 @@
 package com.example.ogan.listofdevelopersinlagosgithub.repository;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.ogan.listofdevelopersinlagosgithub.common.NetworkUtil;
 import com.example.ogan.listofdevelopersinlagosgithub.database.DeveloperDatabase;

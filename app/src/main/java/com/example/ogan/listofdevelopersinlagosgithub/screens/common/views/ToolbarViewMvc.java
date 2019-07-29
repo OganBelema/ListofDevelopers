@@ -1,9 +1,7 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.common.views;
 
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 
