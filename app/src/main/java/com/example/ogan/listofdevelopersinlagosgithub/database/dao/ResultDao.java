@@ -16,9 +16,9 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 public interface ResultDao {
 
     @Insert(onConflict = REPLACE)
-    public void insertResult(ApiResult result);
+    void insertResult(ApiResult result);
 
     @Query("SELECT * FROM result")
-    public Single<ApiResult> getResult();
+    Single<ApiResult> getResult();
 
 }

@@ -148,12 +148,10 @@ public class DeveloperDetailViewMvcImpl extends BaseObservableViewMvc<DeveloperD
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.fabBtn:
-                for (Listener listener : getListeners()){
-                    listener.floatingActionButtonClicked();
-                }
-                break;
+        if (view.getId() == R.id.fabBtn) {
+            for (Listener listener : getListeners()) {
+                listener.floatingActionButtonClicked();
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.Obser
 
 public interface DeveloperListItemViewMvc extends ObservableViewMvc<DeveloperListItemViewMvc.Listener> {
 
-    public interface Listener {
+    interface Listener {
         void onDevelopClicked(Item item);
     }
 

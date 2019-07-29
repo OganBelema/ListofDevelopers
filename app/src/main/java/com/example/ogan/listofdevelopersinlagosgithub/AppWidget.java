@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 
+import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.DeveloperDetailsActivity;
-import com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.ListOfDevelopersActivity;
 import com.squareup.picasso.Picasso;
 
 /**

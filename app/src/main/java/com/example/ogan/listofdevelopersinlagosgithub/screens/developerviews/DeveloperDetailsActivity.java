@@ -6,21 +6,26 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.ogan.listofdevelopersinlagosgithub.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
+import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers.BaseActivity;
 import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.DeveloperDetailViewModel;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd;
 
 public class DeveloperDetailsActivity extends BaseActivity implements DeveloperDetailViewMvc.Listener {
 
     private DeveloperDetailViewMvc mDeveloperDetailViewMvc;
+    private PublisherInterstitialAd mPublisherInterstitialAd;
     private String mUsername;
     private String mUppercaseUsername;
     private String mUserUrl;
@@ -123,6 +128,46 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
 
         //this is for getting palette from avatar so as to customise view
         //mDeveloperDetailViewMvc.customiseView(avatar, getWindow());
+        setUpAd();
+    }
+
+    private void setUpAd() {
+        mPublisherInterstitialAd = new PublisherInterstitialAd(this);
+        mPublisherInterstitialAd.setAdUnitId("/6499/example/interstitial");
+        mPublisherInterstitialAd.loadAd(new PublisherAdRequest.Builder().build());
+
+        mPublisherInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the interstitial ad is closed.
+                shareDeveloper();
+            }
+        });
     }
 
     private void saveExtrasInSharedPreference() {
@@ -165,6 +210,15 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
 
     @Override
     public void floatingActionButtonClicked() {
+        if (mPublisherInterstitialAd.isLoaded()) {
+            mPublisherInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+            shareDeveloper();
+        }
+    }
+
+    private void shareDeveloper() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this awesome lagos based java developer; " + mUppercaseUsername + ". " + mUserUrl);

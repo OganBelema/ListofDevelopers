@@ -32,7 +32,6 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
 
     @Nullable
     private RecyclerAdapter mRecyclerAdapter;
-    private final PaginationScrollListener mPaginationScrollListener;
 
     public ListOfDevelopersViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
 
@@ -50,10 +49,10 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
 
-        mPaginationScrollListener = new PaginationScrollListener(linearLayoutManager) {
+        PaginationScrollListener paginationScrollListener = new PaginationScrollListener(linearLayoutManager) {
             @Override
             protected void loadMoreItems() {
-                for (Listener listener: getListeners()){
+                for (Listener listener : getListeners()) {
                     listener.loadMoreItems();
                 }
             }
@@ -62,8 +61,8 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
             public int getTotalPageCount() {
                 int totalPageCount = 0;
 
-                for (Listener listener : getListeners()){
-                   totalPageCount  = listener.getTotalPageCount();
+                for (Listener listener : getListeners()) {
+                    totalPageCount = listener.getTotalPageCount();
                 }
 
                 return totalPageCount;
@@ -73,7 +72,7 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
             public boolean isLastPage() {
                 boolean isLastPage = false;
 
-                for (Listener listener : getListeners()){
+                for (Listener listener : getListeners()) {
                     isLastPage = listener.isLastPage();
                 }
 
@@ -82,17 +81,17 @@ public class ListOfDevelopersViewMvcImpl extends BaseObservableViewMvc<ListOfDev
 
             @Override
             public boolean isLoading() {
-                 boolean isLoading = false;
+                boolean isLoading = false;
 
-                 for (Listener listener: getListeners()){
-                     isLoading = listener.isLoading();
-                 }
+                for (Listener listener : getListeners()) {
+                    isLoading = listener.isLoading();
+                }
 
                 return isLoading;
             }
         };
 
-        mRecyclerView.addOnScrollListener(mPaginationScrollListener);
+        mRecyclerView.addOnScrollListener(paginationScrollListener);
 
     }
 

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ogan.listofdevelopersinlagosgithub.Constants;
+import com.example.ogan.listofdevelopersinlagosgithub.common.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvc;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvcFactory;
@@ -29,23 +31,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private ViewMvcFactory mViewMvcFactory;
 
     private boolean mIsLoadingAdded = false;
+    private DeveloperListItemViewMvc mDeveloperListItemViewMvc;
 
     public RecyclerAdapter(Context context, ViewMvcFactory viewMvcFactory) {
         mContext = context;
         mViewMvcFactory = viewMvcFactory;
     }
 
-
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
 
         switch (viewType) {
             case ITEM:
-                DeveloperListItemViewMvc developerListItemViewMvc =
-                        mViewMvcFactory.getDeveloperListItemViewMvc(parent);
-                viewHolder = new UserViewHolder(developerListItemViewMvc);
-                developerListItemViewMvc.registerListener(this);
+                mDeveloperListItemViewMvc = mViewMvcFactory.getDeveloperListItemViewMvc(parent);
+                viewHolder = new UserViewHolder(mDeveloperListItemViewMvc);
+                mDeveloperListItemViewMvc.registerListener(this);
                 break;
             case LOADING:
                 ViewMvc viewMvc = mViewMvcFactory.getViewMvc(parent);
@@ -57,7 +58,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder,  int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder,  int position) {
 
         switch (getItemViewType(position)) {
             case ITEM:
@@ -93,7 +94,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyItemInserted(mItemList.size() - 1);
     }
 
-    public void addAll(List<Item> results) {
+    void addAll(List<Item> results) {
         for (Item result : results) {
             add(result);
         }
@@ -107,7 +108,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void clear() {
+    void clear() {
         mIsLoadingAdded = false;
         while (getItemCount() > 0) {
             remove(getItem(0));
@@ -119,12 +120,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-    public void addLoadingFooter() {
+    void addLoadingFooter() {
         mIsLoadingAdded = true;
         add(new Item());
     }
 
-    public void removeLoadingFooter() {
+    void removeLoadingFooter() {
         mIsLoadingAdded = false;
 
         int position = mItemList.size() - 1;
@@ -138,6 +139,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private Item getItem(int position) {
         return mItemList.get(position);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mDeveloperListItemViewMvc.unregisterListener(this);
     }
 
     @Override
@@ -167,7 +174,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         private final DeveloperListItemViewMvc mDeveloperListItemViewMvc;
 
-        public UserViewHolder(DeveloperListItemViewMvc developerListItemViewMvc){
+        UserViewHolder(DeveloperListItemViewMvc developerListItemViewMvc){
             super(developerListItemViewMvc.getRootView());
             mDeveloperListItemViewMvc = developerListItemViewMvc;
         }
@@ -175,7 +182,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class LoadingVH extends RecyclerView.ViewHolder {
 
-        public LoadingVH(ViewMvc viewMvc) {
+        LoadingVH(ViewMvc viewMvc) {
             super(viewMvc.getRootView());
         }
     }
