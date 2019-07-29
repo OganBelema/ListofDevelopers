@@ -2,13 +2,17 @@ package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
+import com.example.ogan.listofdevelopersinlagosgithub.Constants;
+import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers.BaseActivity;
 import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.DeveloperDetailViewModel;
@@ -21,26 +25,18 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
     private String mUserUrl;
     private String mAvatar;
 
-    public static final String USERNAME_KEY =
-            "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.USERNAME";
-
-    public static final String URL_KEY =
-            "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.URL";
-
-    public static final String AVATAR_KEY =
-            "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.AVATAR";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        offloadExtras();
 
         mDeveloperDetailViewMvc = getPresentationComponent().getViewMvcFactory().getDeveloperDetailViewMvc(null);
         mDeveloperDetailViewMvc.registerListener(this);
 
         setContentView(mDeveloperDetailViewMvc.getRootView());
+
+        offloadExtras();
+
+        saveExtrasInSharedPreference();
 
         setupToolbar();
 
@@ -77,7 +73,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
                 if (noData != null){
                     if (noData){
                             mDeveloperDetailViewMvc.hideCardView();
-                        mDeveloperDetailViewMvc.showMessage("No data");
+                        mDeveloperDetailViewMvc.showMessage(getString(R.string.no_data));
                     }
                 }
             }
@@ -88,7 +84,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
             public void onChanged(@Nullable Boolean userFetchingError) {
                 if (userFetchingError != null){
                     if (userFetchingError){
-                        mDeveloperDetailViewMvc.showMessage("Error loading data");
+                        mDeveloperDetailViewMvc.showMessage(getString(R.string.data_loading_error));
                     }
                 }
             }
@@ -99,7 +95,7 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
             public void onChanged(@Nullable Boolean requestFailed) {
                 if (requestFailed != null){
                     if (requestFailed){
-                        mDeveloperDetailViewMvc.showMessage("An error occurred while trying to get data. Please check network connection and try again.");
+                        mDeveloperDetailViewMvc.showMessage(getString(R.string.network_error));
                     }
                 }
             }
@@ -128,6 +124,15 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
         //mDeveloperDetailViewMvc.customiseView(avatar, getWindow());
     }
 
+    private void saveExtrasInSharedPreference() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(Constants.SHARED_PEREFERENCE_ID, Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferenceEditor = sharedPreferences.edit();
+        sharedPreferenceEditor.putString(Constants.USERNAME_KEY, mUsername);
+        sharedPreferenceEditor.putString(Constants.URL_KEY, mUserUrl);
+        sharedPreferenceEditor.putString(Constants.AVATAR_KEY, mAvatar);
+        sharedPreferenceEditor.apply();
+    }
+
     private void setupToolbar() {
         //setting toolbar title and back button
         mDeveloperDetailViewMvc.setToolbarTitle(mUppercaseUsername);
@@ -140,10 +145,10 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
     private void offloadExtras() {
         //getting transferred intent from mainActivity
         Intent intent = getIntent();
-        mUsername = intent.getStringExtra(USERNAME_KEY);
+        mUsername = intent.getStringExtra(Constants.USERNAME_KEY);
         mUppercaseUsername = mUsername.substring(0, 1).toUpperCase() + mUsername.substring(1);
-        mUserUrl = intent.getStringExtra(URL_KEY);
-        mAvatar = intent.getStringExtra(AVATAR_KEY);
+        mUserUrl = intent.getStringExtra(Constants.URL_KEY);
+        mAvatar = intent.getStringExtra(Constants.AVATAR_KEY);
     }
 
     @Override

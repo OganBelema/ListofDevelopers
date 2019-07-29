@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.example.ogan.listofdevelopersinlagosgithub.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvc;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvcFactory;
@@ -145,9 +146,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         String url = item.getHtmlUrl();
         String avatar = item.getAvatarUrl();
 
-        intent.putExtra(DeveloperDetailsActivity.USERNAME_KEY, username);
-        intent.putExtra(DeveloperDetailsActivity.URL_KEY, url);
-        intent.putExtra(DeveloperDetailsActivity.AVATAR_KEY, avatar);
+        intent.putExtra(Constants.USERNAME_KEY, username);
+        intent.putExtra(Constants.URL_KEY, url);
+        intent.putExtra(Constants.AVATAR_KEY, avatar);
         mContext.startActivity(intent);
     }
 

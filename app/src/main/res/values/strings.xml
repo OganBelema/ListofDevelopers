@@ -3,4 +3,10 @@
     <string name="no_fullName">Full name not provided</string>
     <string name="repositories" formatted="false">%1$d repositories</string>
     <string name="refresh">Refresh</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="developer_image">Developer\'s image</string>
+    <string name="no_data">No data</string>
+    <string name="network_error">An error occurred while trying to get data. Please check network connection and try again.</string>
+    <string name="data_loading_error">Error loading data</string>
 </resources>
