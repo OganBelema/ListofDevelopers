@@ -1,15 +1,16 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.MenuItem;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.ogan.listofdevelopersinlagosgithub.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.R;

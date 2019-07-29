@@ -29,7 +29,7 @@ public class AppWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
         views.setTextViewText(R.id.dev_appwidget_text, username);
-        Picasso.with(context).load(avatar)
+        Picasso.get().load(avatar)
                 .error(R.drawable.octocat)
                 .into(views, R.id.dev_appwidget_imageView, appWidgetManager
                 .getAppWidgetIds(new ComponentName(context, AppWidget.class)));

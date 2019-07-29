@@ -3,8 +3,9 @@ package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.Toolbar;
 import android.view.Window;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ObservableViewMvc;

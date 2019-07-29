@@ -1,11 +1,12 @@
 package com.example.ogan.listofdevelopersinlagosgithub.repository;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.ogan.listofdevelopersinlagosgithub.common.NetworkUtil;
 import com.example.ogan.listofdevelopersinlagosgithub.database.DeveloperDatabase;
@@ -87,7 +88,7 @@ public class DeveloperDetailRepository implements FetchUserDataUseCase.Listener 
             mFetchUserDataUseCase.fetchUserDataAndNotify(username);
 
             //to load image into imageView
-            mFetchUserDataUseCase.loadImageAndNotify(mContext, avatar);
+            mFetchUserDataUseCase.loadImageAndNotify(avatar);
         } else {
             mDeveloperDatabase.getUserDao().getUser(username)
                     .subscribeOn(Schedulers.io())

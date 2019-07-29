@@ -1,11 +1,12 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.ogan.listofdevelopersinlagosgithub.model.items.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.R;

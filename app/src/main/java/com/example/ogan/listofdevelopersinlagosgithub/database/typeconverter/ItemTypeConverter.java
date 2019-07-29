@@ -1,6 +1,7 @@
 package com.example.ogan.listofdevelopersinlagosgithub.database.typeconverter;
 
-import android.arch.persistence.room.TypeConverter;
+
+import androidx.room.TypeConverter;
 
 import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
 import com.google.gson.Gson;

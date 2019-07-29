@@ -2,8 +2,9 @@ package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ogan.listofdevelopersinlagosgithub.Constants;
 import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
