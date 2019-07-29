@@ -1,22 +1,25 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.NavUtils;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.FetchUserDataUseCase;
-import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.controllers.BaseActivity;
+import com.example.ogan.listofdevelopersinlagosgithub.viewmodel.DeveloperDetailViewModel;
 
-public class DeveloperDetailsActivity extends BaseActivity implements DeveloperDetailViewMvc.Listener, FetchUserDataUseCase.Listener {
+public class DeveloperDetailsActivity extends BaseActivity implements DeveloperDetailViewMvc.Listener {
 
     private DeveloperDetailViewMvc mDeveloperDetailViewMvc;
+    private String mUsername;
     private String mUppercaseUsername;
     private String mUserUrl;
+    private String mAvatar;
 
     public static final String USERNAME_KEY =
             "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.USERNAME";
@@ -26,60 +29,132 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
 
     public static final String AVATAR_KEY =
             "com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews.AVATAR";
-    private FetchUserDataUseCase mFetchUserDataUseCase;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        offloadExtras();
+
         mDeveloperDetailViewMvc = getPresentationComponent().getViewMvcFactory().getDeveloperDetailViewMvc(null);
         mDeveloperDetailViewMvc.registerListener(this);
 
         setContentView(mDeveloperDetailViewMvc.getRootView());
 
-        //getting transferred intent from mainActivity
-        Intent intent = getIntent();
-        String username = intent.getStringExtra(USERNAME_KEY);
-        mUppercaseUsername = username.substring(0, 1).toUpperCase() + username.substring(1);
-        mUserUrl = intent.getStringExtra(URL_KEY);
-        String avatar = intent.getStringExtra(AVATAR_KEY);
+        setupToolbar();
 
+        DeveloperDetailViewModel developerDetailViewModel = ViewModelProviders.of(this,
+                getPresentationComponent().getDeveloperDetailViewModelFactory())
+                .get(DeveloperDetailViewModel.class);
+
+        developerDetailViewModel.loadData(mUsername, mAvatar);
+
+        developerDetailViewModel.loading().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean loading) {
+                if (loading != null){
+                    if (!loading){
+                        mDeveloperDetailViewMvc.hideProgressBar();
+                    }
+                }
+            }
+        });
+
+        developerDetailViewModel.getUserApi().observe(this, new Observer<UserApi>() {
+            @Override
+            public void onChanged(@Nullable UserApi userApi) {
+                if (userApi != null){
+                    mDeveloperDetailViewMvc.displayData(userApi);
+                    mDeveloperDetailViewMvc.showCardView();
+                }
+            }
+        });
+
+        developerDetailViewModel.getNoData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean noData) {
+                if (noData != null){
+                    if (noData){
+                            mDeveloperDetailViewMvc.hideCardView();
+                        mDeveloperDetailViewMvc.showMessage("No data");
+                    }
+                }
+            }
+        });
+
+        developerDetailViewModel.getUserFetchingError().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean userFetchingError) {
+                if (userFetchingError != null){
+                    if (userFetchingError){
+                        mDeveloperDetailViewMvc.showMessage("Error loading data");
+                    }
+                }
+            }
+        });
+
+        developerDetailViewModel.getRequestFailed().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean requestFailed) {
+                if (requestFailed != null){
+                    if (requestFailed){
+                        mDeveloperDetailViewMvc.showMessage("An error occurred while trying to get data. Please check network connection and try again.");
+                    }
+                }
+            }
+        });
+
+        developerDetailViewModel.getBitmap().observe(this, new Observer<Bitmap>() {
+            @Override
+            public void onChanged(@Nullable Bitmap bitmap) {
+                if (bitmap != null){
+                    mDeveloperDetailViewMvc.setProfileImage(bitmap);
+                    mDeveloperDetailViewMvc.customiseView(bitmap, getWindow());
+                }
+            }
+        });
+
+        developerDetailViewModel.getErrorDrawable().observe(this, new Observer<Drawable>() {
+            @Override
+            public void onChanged(@Nullable Drawable errorDrawable) {
+                if (errorDrawable != null){
+                    mDeveloperDetailViewMvc.setProfileImage(errorDrawable);
+                }
+            }
+        });
+
+        //this is for getting palette from avatar so as to customise view
+        //mDeveloperDetailViewMvc.customiseView(avatar, getWindow());
+    }
+
+    private void setupToolbar() {
         //setting toolbar title and back button
         mDeveloperDetailViewMvc.setToolbarTitle(mUppercaseUsername);
         setSupportActionBar(mDeveloperDetailViewMvc.getToolBar());
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
 
-        mFetchUserDataUseCase = getPresentationComponent().getFetchUserDataUseCase();
-        mFetchUserDataUseCase.registerListener(this);
-
-        //making network call with retrofit
-        loadData(username);
-
-        //to load image into imageView
-        mFetchUserDataUseCase.loadImageAndNotify(this, avatar);
-
-
-        //this is for getting palette from avatar so as to customise view
-        //mDeveloperDetailViewMvc.customiseView(avatar, getWindow());
+    private void offloadExtras() {
+        //getting transferred intent from mainActivity
+        Intent intent = getIntent();
+        mUsername = intent.getStringExtra(USERNAME_KEY);
+        mUppercaseUsername = mUsername.substring(0, 1).toUpperCase() + mUsername.substring(1);
+        mUserUrl = intent.getStringExtra(URL_KEY);
+        mAvatar = intent.getStringExtra(AVATAR_KEY);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            //NavUtils.navigateUpFromSameTask(this);
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void loadData(String username) {
-        mFetchUserDataUseCase.fetchUserDataAndNotify(username);
     }
 
     @Override
@@ -93,40 +168,8 @@ public class DeveloperDetailsActivity extends BaseActivity implements DeveloperD
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        mFetchUserDataUseCase.unregisterListener(this);
         mDeveloperDetailViewMvc.unregisterListener(this);
+        super.onDestroy();
     }
 
-    @Override
-    public void onUserFetched(UserApi userApi) {
-        mDeveloperDetailViewMvc.hideProgressBar();
-        mDeveloperDetailViewMvc.displayData(userApi);
-        mDeveloperDetailViewMvc.showCardView();
-    }
-
-    @Override
-    public void onUserFetchFailed() {
-        mDeveloperDetailViewMvc.hideProgressBar();
-        Toast.makeText(getApplicationContext(), "Error loading data", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRequestFailed() {
-        mDeveloperDetailViewMvc.hideProgressBar();
-        Toast.makeText(getApplicationContext(),
-                "An error occurred while trying to get data. Please check network connection and try again.",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onImageLoaded(Bitmap bitmap) {
-        mDeveloperDetailViewMvc.setProfileImage(bitmap);
-        mDeveloperDetailViewMvc.customiseView(bitmap, getWindow());
-    }
-
-    @Override
-    public void onImageLoadingFail(Drawable errorDrawable) {
-        mDeveloperDetailViewMvc.setProfileImage(errorDrawable);
-    }
 }

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.BaseObservableViewMvc;
 import com.squareup.picasso.Picasso;
@@ -47,10 +47,11 @@ public class DeveloperListItemViewMvcImpl extends
     @Override
     public void bindDeveloper(Item item) {
         mItem = item;
-
         String username = item.getLogin();
-        String uppercaseUsername = username.substring(0, 1).toUpperCase() + username.substring(1);
-        mUsernameTextView.setText(uppercaseUsername);
+        if (username != null){
+            String uppercaseUsername = username.substring(0, 1).toUpperCase() + username.substring(1);
+            mUsernameTextView.setText(uppercaseUsername);
+        }
         Picasso.with(getContext()).load(item.getAvatarUrl()).into(mUserImageView);
     }
 

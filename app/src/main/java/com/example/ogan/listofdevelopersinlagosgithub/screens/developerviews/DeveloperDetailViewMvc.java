@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ObservableViewMvc;
 
 /**
@@ -23,7 +23,11 @@ public interface DeveloperDetailViewMvc extends ObservableViewMvc<DeveloperDetai
 
     void showCardView();
 
+    void hideCardView();
+
     void hideProgressBar();
+
+    void showMessage(String message);
 
     void setToolbarTitle(String toolbarTitle);
 

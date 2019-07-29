@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.items.Item;
+import com.example.ogan.listofdevelopersinlagosgithub.model.items.Item;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvc;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.ViewMvcFactory;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by ogan on 8/15/17.
  */
 
-class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements DeveloperListItemViewMvc.Listener {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements DeveloperListItemViewMvc.Listener {
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;

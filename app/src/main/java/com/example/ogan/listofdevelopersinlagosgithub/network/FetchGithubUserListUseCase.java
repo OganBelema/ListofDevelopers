@@ -2,7 +2,7 @@ package com.example.ogan.listofdevelopersinlagosgithub.network;
 
 import android.support.annotation.NonNull;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.items.ApiResult;
+import com.example.ogan.listofdevelopersinlagosgithub.model.items.ApiResult;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.BaseObservable;
 
 import retrofit2.Call;

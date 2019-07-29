@@ -26,7 +26,7 @@ public class ViewMvcFactory {
     }
 
     public ListOfDevelopersViewMvc getListOfDevelopersViewMvc(@Nullable ViewGroup parent){
-        return new ListOfDevelopersViewMvcImpl(mLayoutInflater, parent, this);
+        return new ListOfDevelopersViewMvcImpl(mLayoutInflater, parent);
     }
 
     public DeveloperDetailViewMvc getDeveloperDetailViewMvc(@Nullable ViewGroup parent){

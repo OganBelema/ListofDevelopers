@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.ogan.listofdevelopersinlagosgithub.network.users.UserApi;
+import com.example.ogan.listofdevelopersinlagosgithub.model.users.UserApi;
 import com.example.ogan.listofdevelopersinlagosgithub.R;
 import com.example.ogan.listofdevelopersinlagosgithub.screens.common.views.BaseObservableViewMvc;
 
@@ -47,7 +48,7 @@ public class DeveloperDetailViewMvcImpl extends BaseObservableViewMvc<DeveloperD
         mButton = (FloatingActionButton) findViewById(R.id.fabBtn);
         mTxtFullNameTextView = (TextView) findViewById(R.id.user_name);
         mRepoTextView = (TextView) findViewById(R.id.repo_number);
-        mCardView = (CardView) findViewById(R.id.course_card);
+        mCardView = (CardView) findViewById(R.id.info_card);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         mButton.setOnClickListener(this);
@@ -68,6 +69,11 @@ public class DeveloperDetailViewMvcImpl extends BaseObservableViewMvc<DeveloperD
     @Override
     public void showCardView() {
         mCardView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideCardView(){
+        mAvatarView.setVisibility(View.GONE);
     }
 
     @Override
@@ -132,6 +138,11 @@ public class DeveloperDetailViewMvcImpl extends BaseObservableViewMvc<DeveloperD
     @Override
     public void customiseFloatingActionBar(ColorStateList colorStateList) {
        mButton.setBackgroundTintList(colorStateList);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Snackbar.make(getRootView(), message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
