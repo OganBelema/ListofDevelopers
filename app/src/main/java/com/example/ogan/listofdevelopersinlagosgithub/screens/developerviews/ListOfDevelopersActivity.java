@@ -41,7 +41,7 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
             public void onChanged(@Nullable Throwable throwable) {
                 if (throwable != null){
                     mListOfDevelopersViewMvc.hideProgressBar();
-                    mListOfDevelopersViewMvc.showMessage("An error occurred while trying to get data. Please check network connection and try again. ");
+                    mListOfDevelopersViewMvc.showMessage(getString(R.string.network_error));
                 }
             }
         });
@@ -71,7 +71,7 @@ public class ListOfDevelopersActivity extends BaseActivity implements ListOfDeve
             public void onChanged(@Nullable Boolean noData) {
                 if (noData != null){
                     if (noData){
-                        mListOfDevelopersViewMvc.showMessage("No data");
+                        mListOfDevelopersViewMvc.showMessage(getString(R.string.no_data));
                     }
                 }
             }
