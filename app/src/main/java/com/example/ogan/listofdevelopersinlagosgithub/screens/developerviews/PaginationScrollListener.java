@@ -1,5 +1,6 @@
 package com.example.ogan.listofdevelopersinlagosgithub.screens.developerviews;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,12 +12,12 @@ abstract class PaginationScrollListener extends RecyclerView.OnScrollListener {
 
     private final LinearLayoutManager layoutManager;
 
-    public PaginationScrollListener(LinearLayoutManager layoutManager) {
+    PaginationScrollListener(LinearLayoutManager layoutManager) {
         this.layoutManager = layoutManager;
     }
 
     @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
         int visibleItemCount = layoutManager.getChildCount();

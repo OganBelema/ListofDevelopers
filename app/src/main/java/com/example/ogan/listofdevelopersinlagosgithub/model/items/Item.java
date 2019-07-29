@@ -54,10 +54,6 @@ public class Item implements Parcelable {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -70,16 +66,8 @@ public class Item implements Parcelable {
         return avatarUrl;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
     public String getHtmlUrl() {
         return htmlUrl;
-    }
-
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
     }
 
 

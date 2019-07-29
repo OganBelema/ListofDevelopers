@@ -16,7 +16,7 @@ public class ListOfDevelopersViewModel extends ViewModel {
 
     private final ListOfDeveloperRepository mListOfDeveloperRepository;
 
-    public ListOfDevelopersViewModel(ListOfDeveloperRepository listOfDeveloperRepository, RecyclerAdapter recyclerAdapter) {
+    ListOfDevelopersViewModel(ListOfDeveloperRepository listOfDeveloperRepository, RecyclerAdapter recyclerAdapter) {
         mRecyclerAdapter = recyclerAdapter;
         mListOfDeveloperRepository = listOfDeveloperRepository;
         mListOfDeveloperRepository.loadData();

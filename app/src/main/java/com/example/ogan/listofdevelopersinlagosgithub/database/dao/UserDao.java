@@ -15,8 +15,8 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 public interface UserDao {
 
     @Insert(onConflict = REPLACE)
-    public void insertUser(UserApi user);
+    void insertUser(UserApi user);
 
     @Query("SELECT * FROM users WHERE login = :username")
-    public Single<UserApi> getUser(String username);
+    Single<UserApi> getUser(String username);
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public interface ListOfDevelopersViewMvc extends ObservableViewMvc<ListOfDevelopersViewMvc.Listener> {
 
-    public interface Listener {
+    interface Listener {
 
         void loadMoreItems();
 

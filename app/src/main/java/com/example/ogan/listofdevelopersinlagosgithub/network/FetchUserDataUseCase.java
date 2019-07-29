@@ -1,6 +1,5 @@
 package com.example.ogan.listofdevelopersinlagosgithub.network;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 

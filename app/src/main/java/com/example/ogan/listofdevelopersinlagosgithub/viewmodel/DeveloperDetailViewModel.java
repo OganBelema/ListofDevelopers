@@ -13,7 +13,7 @@ public class DeveloperDetailViewModel extends ViewModel {
 
     private final DeveloperDetailRepository mDeveloperDetailRepository;
 
-    public DeveloperDetailViewModel(DeveloperDetailRepository mDeveloperDetailRepository) {
+    DeveloperDetailViewModel(DeveloperDetailRepository mDeveloperDetailRepository) {
         this.mDeveloperDetailRepository = mDeveloperDetailRepository;
     }
 
