@@ -5,7 +5,7 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.ogan.listofdevelopersinlagosgithub"
+        applicationId "com.oganbelema.listofdevelopersinlagosgithub"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1

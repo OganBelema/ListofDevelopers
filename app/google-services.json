@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187535476881:android:c3caf2d92691a8cd",
+        "android_client_info": {
+          "package_name": "com.oganbelema.listofdevelopersinlagosgithub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "187535476881-tl217infl0lrdiqs8182lcrqaa56129d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxWSX3nhP_EF28jxbbZTC0CCBbknNTGcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "187535476881-tl217infl0lrdiqs8182lcrqaa56129d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
