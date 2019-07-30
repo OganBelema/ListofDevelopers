@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
+// Apply the Performance Monitoring plugin
+apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     compileSdkVersion 28
@@ -76,5 +78,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-ads:18.1.1'
 
     implementation 'com.android.support:multidex:1.0.3'
+
+    // Add the dependency for the Performance Monitoring library
+    implementation 'com.google.firebase:firebase-perf:18.0.1'
 
 }
